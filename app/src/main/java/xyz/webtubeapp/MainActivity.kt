@@ -1,5 +1,7 @@
 package xyz.webtubeapp
 
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import android.annotation.SuppressLint
 import android.content.*
 import android.content.pm.ActivityInfo
