@@ -29,10 +29,10 @@ import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebSettingsCompat.FORCE_DARK_OFF
 import androidx.webkit.WebSettingsCompat.FORCE_DARK_ON
 import androidx.webkit.WebViewFeature
-import com.github.javiersantos.appupdater.AppUpdater
-import com.github.javiersantos.appupdater.enums.Display
-import com.github.javiersantos.appupdater.enums.Duration
-import com.github.javiersantos.appupdater.enums.UpdateFrom
+//import com.github.javiersantos.appupdater.AppUpdater
+//import com.github.javiersantos.appupdater.enums.Display
+//import com.github.javiersantos.appupdater.enums.Duration
+//import com.github.javiersantos.appupdater.enums.UpdateFrom
 
 
 class MainActivity : AppCompatActivity() {
@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        val appUpdater = AppUpdater(this)
+/*        val appUpdater = AppUpdater(this)
             .setDisplay(Display.DIALOG)
             //.setDisplay(Display.NOTIFICATION)
             .setDuration(Duration.INDEFINITE)
@@ -69,6 +69,7 @@ class MainActivity : AppCompatActivity() {
             .setGitHubUserAndRepo("thewebtube", "webtube")
 
         appUpdater.start()
+*/
 
         LocalBroadcastManager.getInstance(this)
             .registerReceiver(togglePlay,  IntentFilter(ACTION_TOGGLE_PLAY))
