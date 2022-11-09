@@ -1,5 +1,8 @@
 name: Build application
 
+env:
+  BUILD_TOOLS_VERSION: "33.0.0"
+          
 on: [pull_request, push, workflow_dispatch]
 
 jobs:
@@ -23,10 +26,8 @@ jobs:
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
           alias: key0
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-        env:
-          BUILD_TOOLS_VERSION: "33.0.0"
       - name: Make artifact
-      - uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3
         with:
           name: app-release-signed
           path: ${{steps.sign_app.outputs.signedReleaseFile}}
