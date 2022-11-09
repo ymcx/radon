@@ -30,4 +30,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: app-release-signed
-          path: ${{steps.sign_app.outputs.signedReleaseFile}}
+          path: app/build/outputs/apk/release/app-release-unsigned.apk
