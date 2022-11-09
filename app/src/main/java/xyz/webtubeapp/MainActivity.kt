@@ -237,7 +237,7 @@ class MainActivity : AppCompatActivity() {
                         if (host.contains("m.youtube.com")) {
                             jsc?.exec("init")
 
-                            Toast.makeText(this@MainActivity, "injected", Toast.LENGTH_SHORT).show()
+                            //Toast.makeText(this@MainActivity, "injected", Toast.LENGTH_SHORT).show()
                         }
                     }
 
