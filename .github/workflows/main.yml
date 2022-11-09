@@ -26,12 +26,9 @@ jobs:
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
           alias: key0
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-      #- name: Make artifact
-        #uses: actions/upload-artifact@v3
-        #with:
-          #name: app-release-signed
-          #path: app/build/outputs/apk/release/app-release-unsigned-signed.apk
       - name: Upload files to a GitHub release
         uses: svenstaro/upload-release-action@2.3.0
         with:
           file: app/build/outputs/apk/release/app-release-unsigned-signed.apk
+          tag: ${{ github.ref }}
+          overwrite: true
