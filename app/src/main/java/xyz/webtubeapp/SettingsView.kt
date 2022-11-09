@@ -9,10 +9,10 @@ import android.content.SharedPreferences
 
 import android.content.pm.PackageManager
 import android.net.Uri
-import com.github.javiersantos.appupdater.AppUpdater
-import com.github.javiersantos.appupdater.enums.Display
-import com.github.javiersantos.appupdater.enums.Duration
-import com.github.javiersantos.appupdater.enums.UpdateFrom
+//import com.github.javiersantos.appupdater.AppUpdater
+//import com.github.javiersantos.appupdater.enums.Display
+//import com.github.javiersantos.appupdater.enums.Duration
+//import com.github.javiersantos.appupdater.enums.UpdateFrom
 import android.content.pm.PackageInfo
 import android.widget.Toast
 import com.jakewharton.processphoenix.ProcessPhoenix
@@ -37,13 +37,14 @@ class SettingsView : AppCompatActivity() {
         val editor = preferences.edit()
         val editorbg = preferencesbg.edit()
 
-        val appUpdater = AppUpdater(this)
+/*        val appUpdater = AppUpdater(this)
             .setDisplay(Display.DIALOG)
             //.setDisplay(Display.NOTIFICATION)
             .setDuration(Duration.INDEFINITE)
             .setUpdateFrom(UpdateFrom.JSON)
             .showAppUpdated(true)
             .setUpdateJSON("https://raw.githubusercontent.com/thewebtube/webtube/main/update.json")
+*/            
 
         binding.darkswitch.isChecked = preferences.getString("COLOR","DARK").equals("DARK") && AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
         binding.backgroundswitch.isChecked = preferencesbg.getBoolean(PREF_BACKGROUND_PLAY_ENABLED, false)
@@ -87,7 +88,7 @@ class SettingsView : AppCompatActivity() {
         }
         binding.buttonBack.setOnClickListener { back() }
 
-        binding.checkUpdate.setOnClickListener { appUpdater.start() }
+        //binding.checkUpdate.setOnClickListener { appUpdater.start() }
 
         binding.openDiscord.setOnClickListener { openDiscord() }
 
