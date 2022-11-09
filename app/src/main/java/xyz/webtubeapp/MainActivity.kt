@@ -165,18 +165,19 @@ class MainActivity : AppCompatActivity() {
                 private var mCustomView: View? = null
                 private var mCustomViewCallback: CustomViewCallback? = null
                 protected var mFullscreenContainer: FrameLayout? = null
-                private var mOriginalOrientation = 0
-                private var mOriginalSystemUiVisibility = 0
+                //private var mOriginalOrientation = 0
+                //private var mOriginalSystemUiVisibility = 0
 
                 @SuppressLint("WrongConstant")
                 override fun onHideCustomView() {
+                    requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
                     (this@MainActivity.window.decorView as FrameLayout).removeView(mCustomView)
                     isFullScreen = false
                     mCustomView = null
 
-                    this@MainActivity.window.decorView.systemUiVisibility =
-                        mOriginalSystemUiVisibility
-                    this@MainActivity.requestedOrientation = mOriginalOrientation
+                    //this@MainActivity.window.decorView.systemUiVisibility =
+                        //mOriginalSystemUiVisibility
+                    //this@MainActivity.requestedOrientation = mOriginalOrientation
                     mCustomViewCallback!!.onCustomViewHidden()
                     mCustomViewCallback = null
                 }
@@ -185,21 +186,22 @@ class MainActivity : AppCompatActivity() {
                     paramView: View?,
                     paramCustomViewCallback: CustomViewCallback?
                 ) {
+                    requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
                     if (mCustomView != null) {
                         onHideCustomView()
                         return
                     }
                     isFullScreen = true
                     mCustomView = paramView
-                    mOriginalSystemUiVisibility =
-                        this@MainActivity.window.decorView.systemUiVisibility
-                    mOriginalOrientation = this@MainActivity.requestedOrientation
+                    //mOriginalSystemUiVisibility =
+                        //this@MainActivity.window.decorView.systemUiVisibility
+                    //mOriginalOrientation = this@MainActivity.requestedOrientation
                     mCustomViewCallback = paramCustomViewCallback
                     (this@MainActivity.window.decorView as FrameLayout).addView(
                         mCustomView,
                         FrameLayout.LayoutParams(-1, -1)
                     )
-                    this@MainActivity.window.decorView.systemUiVisibility = 3846
+                    //this@MainActivity.window.decorView.systemUiVisibility = 3846
                 }
 
 
@@ -310,7 +312,7 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+/*        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             // disable status bar
             @Suppress("DEPRECATION")
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -334,6 +336,8 @@ class MainActivity : AppCompatActivity() {
 
             supportActionBar?.show()
         }
+*/
+
     }
 
     override fun onResume() {
