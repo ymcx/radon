@@ -14,5 +14,16 @@ jobs:
           distribution: 'temurin'
           java-version: 17
           cache: gradle
-      - name: Build with Gradle
-        run: ./gradlew build --no-daemon
+      - name: Sign Android release
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: app/build/outputs/apk/release 
+          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+          alias: key0
+          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+        env:
+          BUILD_TOOLS_VERSION: "33.0.0"
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Signed app bundle
+          path: ${{steps.sign_app.outputs.signedReleaseFile}}
