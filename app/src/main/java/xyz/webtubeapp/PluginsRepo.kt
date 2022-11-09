@@ -12,7 +12,7 @@ import org.json.JSONObject
 
 class PluginsRepo(context: Context) {
     private val plugins_url_api: String =
-        "https://raw.githubusercontent.com/thewebtube/plugins/main/plugins.json"
+        "https://raw.githubusercontent.com/ymcx/webtubeapp/master/plugins.json"
     private var plugins: JSONArray? = null;
     private var dbHelper : PluginDBHelper = PluginDBHelper(context)
     private var db = dbHelper.writableDatabase
