@@ -38,7 +38,19 @@ import androidx.webkit.WebViewFeature
 class MainActivity : AppCompatActivity() {
     private val ACTION_TOGGLE_PLAY = "togglePlay"
 
-
+    private fun hide() {
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            hide(WindowInsetsCompat.Type.systemBars())
+            systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        }
+    }
+    private fun show() {
+        WindowInsetsControllerCompat(window, window.decorView).apply {
+            show(WindowInsetsCompat.Type.systemBars())
+            systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        }
+    }
+    
     private var urlFinished: String = ""
     var webView: customWebView? = null
     var progressBar: ProgressBar? = null
@@ -171,6 +183,7 @@ class MainActivity : AppCompatActivity() {
                 @SuppressLint("WrongConstant")
                 override fun onHideCustomView() {
                     requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+                    show()
                     (this@MainActivity.window.decorView as FrameLayout).removeView(mCustomView)
                     isFullScreen = false
                     mCustomView = null
@@ -187,6 +200,7 @@ class MainActivity : AppCompatActivity() {
                     paramCustomViewCallback: CustomViewCallback?
                 ) {
                     requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+                    hide()
                     if (mCustomView != null) {
                         onHideCustomView()
                         return
