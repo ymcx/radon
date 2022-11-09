@@ -69,7 +69,7 @@ class JSController(webView: WebView, context : Context) {
         
         ,1000)
         
-        function insertSettings(){
+/*        function insertSettings(){
            if(document.querySelector("#wt-settings")) return
             const bar = document.querySelector("ytm-topbar-menu-button-renderer");
             const logo = document.createElement("span");
@@ -85,6 +85,7 @@ class JSController(webView: WebView, context : Context) {
         }
         
         setInterval(insertSettings,500)
+*/
     
         
         window.executed = true
