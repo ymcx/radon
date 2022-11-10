@@ -1,0 +1,6 @@
+[{
+  "name": "Adguard",
+  "url": "https://raw.githubusercontent.com/thewebtube/plugins/main/adguard/main.js",
+  "enabled": true,
+  "injectOnUrlChange": false
+}]
