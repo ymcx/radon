@@ -15,6 +15,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
+import java.net.CookieManager
 
 class MainActivity : AppCompatActivity() {
     private var urlFinished: String = ""
