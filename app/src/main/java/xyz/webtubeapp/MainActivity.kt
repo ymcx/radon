@@ -384,22 +384,21 @@ class MainActivity : AppCompatActivity() {
             return activeNetworkInfo != null
         }
 
+    private fun isDarkModeOn(): Boolean {
+        val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        return currentNightMode == Configuration.UI_MODE_NIGHT_YES
+    }
+
     private fun initTheme(){
         val preferences: SharedPreferences = this.getSharedPreferences(THEME, MODE_PRIVATE)
         val webSettings = webView!!.settings
-        if (preferences.getString("COLOR", "DARK") == "DARK") {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
-                WebSettingsCompat.setForceDark(webSettings, FORCE_DARK_ON)
-            }
+        if (isDarkModeOn()) {
+            WebSettingsCompat.setForceDark(webSettings, FORCE_DARK_ON)
         } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
-                WebSettingsCompat.setForceDark(webSettings, FORCE_DARK_OFF)
-            }
+            WebSettingsCompat.setForceDark(webSettings, FORCE_DARK_OFF)
         }
-
     }
+    
     private fun isVideoView(): Boolean {
         return webView?.url.toString().contains("youtube.com/watch?v=")
     }
