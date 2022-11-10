@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity() {
     
     private var urlFinished: String = ""
     var webView: customWebView? = null
+    webView!!.setVisibility(View.INVISIBLE);
     var progressBar: ProgressBar? = null
     private var javaScriptInterFace: JavaScriptInterface? = null
     var jsc: JSController? = null
@@ -225,6 +226,7 @@ class MainActivity : AppCompatActivity() {
                 override fun onProgressChanged(view: WebView, progress: Int) {
                     //                    getActivity().setProgress(progress * 100);
                     if (progress == 100) progressBar!!.visibility = View.GONE
+                    if (progress == 100) webView!!.setVisibility(View.VISIBLE);
                 }
 
                 override fun getDefaultVideoPoster(): Bitmap? {
