@@ -55,7 +55,6 @@ class MainActivity : AppCompatActivity() {
     
     private var urlFinished: String = ""
     var webView: customWebView? = null
-    webView!!.setVisibility(View.INVISIBLE);
     var progressBar: ProgressBar? = null
     private var javaScriptInterFace: JavaScriptInterface? = null
     var jsc: JSController? = null
@@ -99,6 +98,7 @@ class MainActivity : AppCompatActivity() {
         )
         supportActionBar?.hide()
         webView = findViewById(R.id.webView)
+        webView!!.setVisibility(View.INVISIBLE);
         progressBar = findViewById(R.id.progress_bar_home)
         jsc = JSController(webView!!, this)
         backgroundPlayHelper =  BackgroundPlayHelper(this, webView!!)
