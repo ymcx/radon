@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         webView!!.settings.cacheMode = WebSettings.LOAD_NO_CACHE
         webView!!.setLayerType(View.LAYER_TYPE_HARDWARE, null)
         if (savedInstanceState == null) {
-            webView!!.loadUrl("https://m.youtube.com/")
+            webView!!.loadUrl("https://m.youtube.com/feed/subscriptions/")
         }
         webView!!.webChromeClient = object : WebChromeClient() {
             private var mCustomView: View? = null
