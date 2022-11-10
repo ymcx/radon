@@ -1,6 +1,0 @@
-[{
-  "name": "Adguard",
-  "url": "https://raw.githubusercontent.com/ymcx/webtubeapp/master/app/src/main/java/xyz/webtubeapp/Pluginblock.js",
-  "enabled": true,
-  "injectOnUrlChange": false
-}]
