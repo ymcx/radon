@@ -1,8 +1,6 @@
 package xyz.webtubeapp
 
 import android.content.Context
-import android.util.Log
-import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
@@ -11,22 +9,17 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 class PluginsRepo(context: Context) {
-    private val plugins_url_api: String =
-        "https://raw.githubusercontent.com/ymcx/webtubeapp/master/plugins.json"
+    private val plugins_url_api: String = "https://raw.githubusercontent.com/ymcx/webtubeapp/master/plugins.json"
     private var plugins: JSONArray? = null;
     private var dbHelper : PluginDBHelper = PluginDBHelper(context)
     private var db = dbHelper.writableDatabase
     init {
         var needsUpdate = false
-
         val c = db.rawQuery("SELECT * FROM plugins", null)
         if (c.count == 0) {
             needsUpdate = true
         }
-
         val queue = Volley.newRequestQueue(context)
-
-// Request a string response from the provided URL.
         val stringRequest = StringRequest(
             Request.Method.GET, plugins_url_api,
             { response ->
@@ -37,13 +30,10 @@ class PluginsRepo(context: Context) {
                     val url = plugin.getString("url")
                     val enabled = plugin.getBoolean("enabled")
                     val injectOnUrlChange = plugin.getBoolean("injectOnUrlChange")
-
                     val c = db.rawQuery(
                         "SELECT * FROM plugins WHERE url = ?",
                         arrayOf(url)
                     )
-
-
                     if (c.moveToFirst()) {
                         db.execSQL(
                             "UPDATE plugins SET url = ?, injectOnUrlChange = ? WHERE name = ?",
@@ -54,10 +44,7 @@ class PluginsRepo(context: Context) {
                             "INSERT INTO plugins (name, url, enabled, injectOnUrlChange) VALUES (?, ?, ?, ?)",
                             arrayOf(name, url, enabled, injectOnUrlChange)
                         )
-
                     }
-
-                    // find old plugins and delete them
                     val c2 = db.rawQuery(
                         "SELECT * FROM plugins",
                         null
@@ -79,7 +66,6 @@ class PluginsRepo(context: Context) {
                                     "DELETE FROM plugins WHERE url = ?",
                                     arrayOf(url)
                                 )
-                                // remove plugin from array plugins
                                 for (i in 0 until plugins!!.length()) {
                                     val plugin = plugins!!.getJSONObject(i)
                                     val url = plugin.getString("url")
@@ -88,34 +74,18 @@ class PluginsRepo(context: Context) {
                                         break
                                     }
                                 }
-
                             }
                         } while (c2.moveToNext())
                     }
-
-
-
                 }
-
                 if (needsUpdate) {
-                    // restart app
-                    Toast.makeText(context, "loading, please wait", Toast.LENGTH_SHORT).show()
                     Thread.sleep(1000)
                     ProcessPhoenix.triggerRebirth(context)
-
                 }
-
-
             },
             {})
-        // Add the request to the RequestQueue.
         queue.add(stringRequest)
-
-
-// Add the request
     }
-
-
     fun getPlugins(): JSONArray? {
         return plugins
     }
@@ -152,7 +122,6 @@ class PluginsRepo(context: Context) {
         var pluginsjs = "["
         for (i in 0 until pluginsEnabled!!.length()) {
             val plugin = pluginsEnabled.getJSONObject(i)
-
             val url = plugin.getString("url")
             var injectOnUrlChangejs = "false"
             if (plugin.getInt("injectOnUrlChange") == 1) {
@@ -162,22 +131,16 @@ class PluginsRepo(context: Context) {
             if (plugin.getInt("enabled") == 1) {
                 enabledjs = "true"
             }
-
             pluginsjs += "{name: '" + plugin.getString("name") +
                     "', url: '" + url +
                     "', injectOnUrlChange: " +
                     injectOnUrlChangejs +
             ", enabled: " + enabledjs + "},\n"
-
         }
         pluginsjs += "];"
-
         var script :String = """
-            
             var plugins = $pluginsjs
-            
               var cache = {};
-                
                 function injectAll(mode = "all") {
                   for (var i = 0; i < plugins.length; i++) {
                       if (plugins[i].enabled && (plugins[i].injectOnUrlChange || mode == "all")) {
@@ -185,11 +148,8 @@ class PluginsRepo(context: Context) {
                       }
                   }
                 }
-                
-                
                 function injectScript(url) {
                   if (cache[url]) {
-                      console.log("Injecting " + url + " from cache");
                       eval(cache[url]);
                   } else {
                       var xhr = new XMLHttpRequest();
@@ -205,11 +165,7 @@ class PluginsRepo(context: Context) {
                       xhr.send();
                   }
                 }
-                
-                // on page change 
-                
                 oldurl = window.location.href;
-                
                 setInterval(function () {
                   if (oldurl != window.location.href) {
                       oldurl = window.location.href;
@@ -217,13 +173,8 @@ class PluginsRepo(context: Context) {
                   }
                 }
                   , 1000);
-                
                 injectAll("all")
-              
         """.trimIndent();
-
-
         return script
     }
 }
-
