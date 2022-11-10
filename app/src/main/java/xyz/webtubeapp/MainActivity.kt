@@ -81,6 +81,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 urlFinished = url
                 super.onPageFinished(view, url)
+                CookieManager.getInstance().flush();
             }
         }
         webView!!.setOnKeyListener(View.OnKeyListener { view: View?, keyCode: Int, keyEvent: KeyEvent ->
