@@ -1,17 +1,11 @@
-name: Build application
-
-env:
-  BUILD_TOOLS_VERSION: "33.0.0"
-          
+name: Build APK
 on: [pull_request, push, workflow_dispatch]
-
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
-      - name: Set up JDK 17
+      - name: Setup Java
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
@@ -19,15 +13,15 @@ jobs:
           cache: gradle 
       - name: Build APK
         run: ./gradlew assembleRelease --no-daemon
-      - name: Sign Android release
+      - name: Sign APK
         uses: r0adkll/sign-android-release@v1
         with:
           releaseDirectory: app/build/outputs/apk/release 
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
           alias: key0
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-      - name: Upload files to a GitHub release
-        uses: svenstaro/upload-release-action@2.3.0
+      - name: Upload APK
+        uses: svenstaro/upload-release-action@v2
         with:
           file: app/build/outputs/apk/release/app-release-unsigned-signed.apk
           overwrite: true
