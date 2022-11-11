@@ -6,9 +6,9 @@ jobs:
     steps:
     - name: Decode Keystore
       env:
-        key: ${{ secrets.KEYSTORE }}
+        enc: ${{ secrets.KEYSTORE }}
       run:
-        echo $key | base64 -di > /home/runner/work/radon/radon/app/m.jks
+        path="${RUNNER_TEMP}"/keystore && mkdir "${path}" && echo $enc | base64 -di > "${path}"/m.jks
     - uses: actions/checkout@v2
     - name: Java
       uses: actions/setup-java@v3
