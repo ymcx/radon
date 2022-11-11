@@ -9,6 +9,7 @@ jobs:
       with:
         distribution: temurin
         java-version: 19
+    - name: Build APK
       env:
         KEYSTORE: ${{ secrets.KEYSTORE }}
         SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
