@@ -5,11 +5,11 @@ plugins {
 android {
     compileSdk 33
     defaultConfig {
-        applicationId "xyz.webtubeapp"
+        applicationId "com.ymcx.radon"
         minSdk 33
         targetSdk 33
-        versionCode 9
-        versionName "1.5.3"
+        versionCode 1
+        versionName "1"
     }
     buildTypes {
         release {
