@@ -18,15 +18,15 @@ jobs:
         SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
       run: |
         sudo apt install apksigner zipalign -y
-        path="${RUNNER_TEMP}"/keystore && mkdir "${path}" && echo $enc | base64 -di > "${path}"/m.jks
+        echo $enc | base64 -di > app/m.jks
         ./gradlew assembleRelease --no-daemon
         zipalign -v -p 4 app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/appaligned.apk
-        apksigner sign --ks-key-alias ${SIGNING_KEY_ALIAS} --ks-pass pass:${SIGNING_KEY_PASSWORD} --ks "${path}"/m.jks app/build/outputs/apk/release/appaligned.apk
+        apksigner sign --ks-key-alias ${SIGNING_KEY_ALIAS} --ks-pass pass:${SIGNING_KEY_PASSWORD} --ks app/m.jks app/build/outputs/apk/release/appaligned.apk
         apksigner verify app/build/outputs/apk/release/appaligned.apk        
     - name: Upload
       uses: svenstaro/upload-release-action@v2
       with:
-        file: app/build/outputs/apk/release/app-release-unsigned.apk
+        file: app/build/outputs/apk/release/appaligned.apk
         overwrite: true
     - name: Upload2
       uses: actions/upload-artifact@v2
