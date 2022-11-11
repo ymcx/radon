@@ -1,26 +1,29 @@
-name: Build APK
-on: [pull_request, push, workflow_dispatch]
+name: Compile
+on: [pull_request, push]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Setup Java
+      - name: Decode Keystore
+        env:
+            A: ${{ secrets.KEYSTORE }}
+        run: |
+            B="${RUNNER_TEMP}"/keystore
+            mkdir "${B}"
+            echo $A | base64 -di > "${B}"/C.jks
+      - uses: actions/checkout@v2
+      - name: Java
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: 17
-          cache: gradle 
-      - name: Build APK
+          java-version: 19
+      - name: Compile
         run: ./gradlew assembleRelease --no-daemon
-      - name: Sign APK
-        uses: r0adkll/sign-android-release@v1
-        with:
-          releaseDirectory: app/build/outputs/apk/release 
-          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
-          alias: key0
-          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-      - name: Upload APK
+        env:
+          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
+          SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
+      - name: Upload
         uses: svenstaro/upload-release-action@v2
         with:
           file: app/build/outputs/apk/release/app-release-unsigned-signed.apk
