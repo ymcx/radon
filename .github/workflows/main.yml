@@ -26,5 +26,5 @@ jobs:
       - name: Upload
         uses: svenstaro/upload-release-action@v2
         with:
-          file: app/build/outputs/apk/release/app-release-unsigned-signed.apk
+          file: app/build/outputs/apk/release/app-release-unsigned.apk
           overwrite: true
