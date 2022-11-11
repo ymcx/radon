@@ -1,5 +1,5 @@
 name: Build APK
-on: [pull_request, push, workflow_dispatch]
+on: [pull_request, push]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -20,8 +20,8 @@ jobs:
         sudo apt install apksigner zipalign -y
         echo $KEYSTORE | base64 -di > app/KEYSTORE.jks
         ./gradlew assembleRelease --no-daemon
-        mv app/build/outputs/apk/release/app-release.apk .
-        zipalign -v -p 4 app-release.apk radon.apk
+        mv app/build/outputs/apk/release/*.apk radon.apk
+        zipalign -v -p 4 radon.apk
         apksigner sign --ks-key-alias ${SIGNING_KEY_ALIAS} --ks-pass pass:${SIGNING_KEY_PASSWORD} --ks app/KEYSTORE.jks radon.apk   
     - uses: actions/upload-artifact@v3
       with:
