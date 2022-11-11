@@ -7,10 +7,8 @@ jobs:
     - name: Decode Keystore
       env:
         key: ${{ secrets.KEYSTORE }}
-      run: |
-        PATH="${RUNNER_TEMP}"/keystore
-        mkdir "${PATH}"
-        echo $key | base64 -di > "${PATH}"/m.jks
+      run:
+        echo $key | base64 -di > "${RUNNER_TEMP}"/m.jks
     - uses: actions/checkout@v2
     - name: Java
       uses: actions/setup-java@v3
