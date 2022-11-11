@@ -8,7 +8,7 @@ jobs:
       env:
         key: ${{ secrets.KEYSTORE }}
       run:
-        echo $key | base64 -di > "${RUNNER_TEMP}"/m.jks
+        echo $key | base64 -di > /home/runner/work/radon/radon/app/m.jks
     - uses: actions/checkout@v2
     - name: Java
       uses: actions/setup-java@v3
