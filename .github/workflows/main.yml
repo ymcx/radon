@@ -9,7 +9,6 @@ jobs:
       with:
         distribution: temurin
         java-version: 19
-    - name: Build APK
       env:
         KEYSTORE: ${{ secrets.KEYSTORE }}
         SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
@@ -17,7 +16,7 @@ jobs:
         SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
       run: |
         mkdir -p app/keystore
-        sudo apt install apksigner zipalign openjdk-19-jdk -y
+        sudo apt install apksigner zipalign -y
         echo $KEYSTORE | base64 -di > app/KEYSTORE.jks
         ./gradlew assembleRelease --no-daemon
         mv app/build/outputs/apk/release/app-release.apk .
