@@ -1,33 +1,24 @@
-name: Compile
+name: Build APK
 on: [pull_request, push, workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Java
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'temurin'
-        java-version: 19
-    - name: compile
+    - name: Build APK
       env:
-        enc: ${{ secrets.KEYSTORE }}
+        KEYSTORE: ${{ secrets.KEYSTORE }}
         SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
         SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
         SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
       run: |
         mkdir -p app/keystore
-        sudo apt install apksigner zipalign -y
-        echo $enc | base64 -di > app/m.jks
-        echo $enc | base64 -di > app/keystore/m.jks
+        sudo apt install apksigner zipalign openjdk-19-jdk -y
+        echo $KEYSTORE | base64 -di > app/KEYSTORE.jks
         ./gradlew assembleRelease --no-daemon
-        mv app/build/outputs/apk/release/*.apk .
-        zipalign -v -p 4 app-release.apk aligned.apk
-        apksigner sign --ks-key-alias ${SIGNING_KEY_ALIAS} --ks-pass pass:${SIGNING_KEY_PASSWORD} --ks app/m.jks aligned.apk
-        apksigner verify aligned.apk        
-    - name: Upload
-      uses: svenstaro/upload-release-action@v2
+        mv app/build/outputs/apk/release/app-release.apk .
+        zipalign -v -p 4 app-release.apk radon.apk
+        apksigner sign --ks-key-alias ${SIGNING_KEY_ALIAS} --ks-pass pass:${SIGNING_KEY_PASSWORD} --ks app/KEYSTORE.jks radon.apk   
+    - uses: actions/upload-artifact@v3
       with:
-        file: aligned.apk
-        overwrite: true
+        path: radon.apk
