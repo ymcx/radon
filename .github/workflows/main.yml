@@ -29,7 +29,7 @@ jobs:
         ls -a app
         ls -a 
         mv app/build/outputs/apk/release/*.apk .
-        zipalign -v -p 4 app-release-unsigned.apk aligned.apk
+        zipalign -v -p 4 app-release.apk aligned.apk
         apksigner sign --ks-key-alias ${SIGNING_KEY_ALIAS} --ks-pass pass:${SIGNING_KEY_PASSWORD} --ks app/m.jks aligned
         apksigner verify aligned.apk        
     - name: Upload
