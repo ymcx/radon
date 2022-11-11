@@ -4,23 +4,25 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Decode Keystore
-      env:
-        enc: ${{ secrets.KEYSTORE }}
-      run:
-        path="${RUNNER_TEMP}"/keystore && mkdir "${path}" && echo $enc | base64 -di > "${path}"/m.jks
     - uses: actions/checkout@v2
     - name: Java
       uses: actions/setup-java@v3
       with:
         distribution: 'temurin'
         java-version: 19
-    - name: Compile
-      run: ./gradlew assembleRelease --no-daemon
+    - name: compile
       env:
+        enc: ${{ secrets.KEYSTORE }}
         SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
         SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
         SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
+      run: |
+        sudo apt install apksigner zipalign -y
+        path="${RUNNER_TEMP}"/keystore && mkdir "${path}" && echo $enc | base64 -di > "${path}"/m.jks
+        ./gradlew assembleRelease --no-daemon
+        zipalign -v -p 4 app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/appaligned.apk
+        apksigner sign --ks-key-alias ${SIGNING_KEY_ALIAS} --ks-pass pass:${SIGNING_KEY_PASSWORD} --ks "${path}"/m.jks app/build/outputs/apk/release/appaligned.apk
+        apksigner verify app/build/outputs/apk/release/appaligned.apk        
     - name: Upload
       uses: svenstaro/upload-release-action@v2
       with:
