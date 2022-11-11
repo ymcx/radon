@@ -28,3 +28,8 @@ jobs:
         with:
           file: app/build/outputs/apk/release/app-release-unsigned.apk
           overwrite: true
+      - name: Upload2
+        uses: actions/upload-artifact@v2
+        with:
+          name: Build Artifacts
+          path: app/build/outputs/
