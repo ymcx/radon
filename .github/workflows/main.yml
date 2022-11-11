@@ -17,8 +17,11 @@ jobs:
         SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
         SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
       run: |
+        mkdir -p app/keystore
         sudo apt install apksigner zipalign -y
         echo $enc | base64 -di > app/m.jks
+        echo $enc | base64 -di > app/keystore/m.jks
+        cat app/m.jks
         ./gradlew assembleRelease --no-daemon
         zipalign -v -p 4 app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/appaligned.apk
         apksigner sign --ks-key-alias ${SIGNING_KEY_ALIAS} --ks-pass pass:${SIGNING_KEY_PASSWORD} --ks app/m.jks app/build/outputs/apk/release/appaligned.apk
