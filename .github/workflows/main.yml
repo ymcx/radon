@@ -22,15 +22,9 @@ jobs:
         echo $enc | base64 -di > app/m.jks
         echo $enc | base64 -di > app/keystore/m.jks
         ./gradlew assembleRelease --no-daemon
-        ls -a app/build/outputs/apk/release
-        ls -a app/build/outputs/apk
-        ls -a app/build/outputs
-        ls -a app/build
-        ls -a app
-        ls -a 
         mv app/build/outputs/apk/release/*.apk .
         zipalign -v -p 4 app-release.apk aligned.apk
-        apksigner sign --ks-key-alias ${SIGNING_KEY_ALIAS} --ks-pass pass:${SIGNING_KEY_PASSWORD} --ks app/m.jks aligned
+        apksigner sign --ks-key-alias ${SIGNING_KEY_ALIAS} --ks-pass pass:${SIGNING_KEY_PASSWORD} --ks app/m.jks aligned.apk
         apksigner verify aligned.apk        
     - name: Upload
       uses: svenstaro/upload-release-action@v2
