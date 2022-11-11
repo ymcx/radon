@@ -21,18 +21,13 @@ jobs:
         sudo apt install apksigner zipalign -y
         echo $enc | base64 -di > app/m.jks
         echo $enc | base64 -di > app/keystore/m.jks
-        cat app/m.jks
         ./gradlew assembleRelease --no-daemon
-        zipalign -v -p 4 app/build/outputs/apk/release/app-release-unsigned.apk app/build/outputs/apk/release/appaligned.apk
-        apksigner sign --ks-key-alias ${SIGNING_KEY_ALIAS} --ks-pass pass:${SIGNING_KEY_PASSWORD} --ks app/m.jks app/build/outputs/apk/release/appaligned.apk
-        apksigner verify app/build/outputs/apk/release/appaligned.apk        
+        mv app/build/outputs/apk/release/app-release-unsigned.apk .
+        zipalign -v -p 4 app-release-unsigned.apk aligned.apk
+        apksigner sign --ks-key-alias ${SIGNING_KEY_ALIAS} --ks-pass pass:${SIGNING_KEY_PASSWORD} --ks app/m.jks aligned
+        apksigner verify aligned.apk        
     - name: Upload
       uses: svenstaro/upload-release-action@v2
       with:
-        file: app/build/outputs/apk/release/appaligned.apk
+        file: aligned.apk
         overwrite: true
-    - name: Upload2
-      uses: actions/upload-artifact@v2
-      with:
-        name: Build Artifacts
-        path: app/build/outputs/
