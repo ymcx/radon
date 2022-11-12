@@ -1,5 +1,5 @@
 name: Build APK
-on: [pull_request, push]
+on: [workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-22.04
@@ -13,7 +13,7 @@ jobs:
         sudo apt install -y openjdk-19-jdk apksigner zipalign
         git clone https://github.com/ymcx/radon
         cd radon
-        echo $KEYSTORE | base64 -di > KEYSTORE.jks
+        echo ${KEYSTORE} | base64 -di > KEYSTORE.jks
         ./gradlew assembleRelease --no-daemon
         zipalign -v -p 4 app/build/outputs/apk/release/*.apk radon.apk
         apksigner sign --ks-key-alias ${SIGNING_KEY_ALIAS} --ks-pass pass:${SIGNING_KEY_PASSWORD} --ks KEYSTORE.jks radon.apk   
