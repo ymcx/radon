@@ -25,12 +25,6 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
-    buildFeatures {
-        viewBinding true
-    }
-    lint {
-        abortOnError false
-    }
     namespace 'com.ymcx.radon'
 }
 dependencies {
