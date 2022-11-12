@@ -19,7 +19,6 @@ import androidx.appcompat.app.AppCompatActivity
 class MainActivity : AppCompatActivity() {
     private var urlFinished: String = ""
     var webView: WebView? = null
-    var jsc: JSController? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -29,7 +28,6 @@ class MainActivity : AppCompatActivity() {
         )
         webView = findViewById(R.id.webView)
         webView!!.visibility = View.INVISIBLE;
-        jsc = JSController(webView!!)
         webView!!.setLayerType(View.LAYER_TYPE_HARDWARE, null)
         webView!!.settings.javaScriptEnabled = true
         webView!!.settings.cacheMode = WebSettings.LOAD_NO_CACHE
@@ -73,7 +71,7 @@ class MainActivity : AppCompatActivity() {
                 if (urlFinished != url) {
                     val host = Uri.parse(url).host.toString()
                     if (host.contains("m.youtube.com")) {
-                        jsc?.exec()
+                        exec()
                     }
                 }
                 urlFinished = url
@@ -92,5 +90,40 @@ class MainActivity : AppCompatActivity() {
             }
             false
         })
+    }
+    var js = "[{url: 'https://raw.githubusercontent.com/AdguardTeam/BlockYouTubeAdsShortcut/master/dist/index.js'}]"
+    fun exec() {
+        webView!!.evaluateJavascript("""
+            (() => {
+                const style = document.createElement('style');
+                style.textContent = `body {-webkit-tap-highlight-color:transparent !Important;}`;
+                document.head.append(style);
+                var plugins = $js
+                var cache = {};
+                function injectAll() {
+                    for (var i = 0; i < plugins.length; i++) {
+                        injectScript(plugins[i].url);
+                    }
+                }
+                function injectScript(url) {
+                    if (cache[url]) {
+                        eval(cache[url]);
+                    } else {
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("GET", url, true);
+                        xhr.onreadystatechange = function () {
+                            if (xhr.readyState == 4) {
+                                if (xhr.status == 200) {
+                                    cache[url] = xhr.responseText;
+                                    eval(xhr.responseText);
+                                }
+                            }
+                        }
+                        xhr.send();
+                    }
+                }
+                injectAll()
+            })();
+        """.trimIndent(), null)
     }
 }
