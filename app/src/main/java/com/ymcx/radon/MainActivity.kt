@@ -15,7 +15,6 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
-import android.webkit.CookieManager
 
 class MainActivity : AppCompatActivity() {
     private var urlFinished: String = ""
@@ -79,7 +78,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 urlFinished = url
                 super.onPageFinished(view, url)
-                CookieManager.getInstance().flush();
             }
         }
         webView!!.setOnKeyListener(View.OnKeyListener { _: View?, keyCode: Int, keyEvent: KeyEvent ->
