@@ -1,9 +1,8 @@
 package com.ymcx.radon
 
-import android.content.Context
 import android.webkit.WebView
 
-class JSController(webView: WebView, context : Context) {
+class JSController(webView: WebView) {
     private val webView: WebView = webView
     var js = "[{url: 'https://raw.githubusercontent.com/AdguardTeam/BlockYouTubeAdsShortcut/master/dist/index.js'}]"
     fun exec() {
