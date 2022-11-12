@@ -10,8 +10,7 @@ jobs:
         SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
         SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
       run: |
-        java --help
-        apksigner --help
+        java --version
         zipalign --help
         sudo apt install -y openjdk-19-jdk apksigner zipalign
         git clone https://github.com/ymcx/radon
