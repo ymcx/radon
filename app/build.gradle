@@ -2,7 +2,6 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
 }
-
 android {
     compileSdk 33
     defaultConfig {
@@ -29,9 +28,10 @@ android {
     buildFeatures {
         viewBinding true
     }
-    lintOptions {
+    lint {
         abortOnError false
     }
+    namespace 'com.ymcx.radon'
 }
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.5.1'
