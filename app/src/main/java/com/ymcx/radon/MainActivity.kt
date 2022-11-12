@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
     var webView: WebView? = null
     var jsc: JSController? = null
     override fun onCreate(savedInstanceState: Bundle?) {
-        supportActionBar?.hide()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         window.setFlags(
@@ -30,12 +29,11 @@ class MainActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED
         )
         webView = findViewById(R.id.webView)
-        webView!!.setVisibility(View.INVISIBLE);
-        jsc = JSController(webView!!, this)
+        webView!!.visibility = View.INVISIBLE;
+        jsc = JSController(webView!!)
         webView!!.setLayerType(View.LAYER_TYPE_HARDWARE, null)
         webView!!.settings.javaScriptEnabled = true
         webView!!.settings.cacheMode = WebSettings.LOAD_NO_CACHE
-        webView!!.setLayerType(View.LAYER_TYPE_HARDWARE, null)
         if (savedInstanceState == null) {
             webView!!.loadUrl("https://m.youtube.com/feed/subscriptions/")
         }
@@ -45,7 +43,6 @@ class MainActivity : AppCompatActivity() {
                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
                 WindowInsetsControllerCompat(window, window.decorView).apply {
                     show(WindowInsetsCompat.Type.systemBars())
-                    systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
                 }
                 (this@MainActivity.window.decorView as FrameLayout).removeView(mCustomView)
                 mCustomView = null
@@ -66,7 +63,7 @@ class MainActivity : AppCompatActivity() {
                 )
             }
             override fun onProgressChanged(view: WebView, progress: Int) {
-                if (progress == 100) webView!!.setVisibility(View.VISIBLE);
+                if (progress == 100) webView!!.visibility = View.VISIBLE;
             }
             override fun getDefaultVideoPoster(): Bitmap? {
                 return Bitmap.createBitmap(10, 10, Bitmap.Config.ARGB_8888);
@@ -85,7 +82,7 @@ class MainActivity : AppCompatActivity() {
                 CookieManager.getInstance().flush();
             }
         }
-        webView!!.setOnKeyListener(View.OnKeyListener { view: View?, keyCode: Int, keyEvent: KeyEvent ->
+        webView!!.setOnKeyListener(View.OnKeyListener { _: View?, keyCode: Int, keyEvent: KeyEvent ->
             if (keyEvent.action != KeyEvent.ACTION_DOWN) return@OnKeyListener true
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 if (webView!!.canGoBack()) {
