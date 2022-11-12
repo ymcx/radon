@@ -4,13 +4,18 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
+    - name: Java
+    - uses: actions/setup-java@v2
+      with:
+        distribution: temurin
+        java-version: 19
     - name: Build APK
       env:
         KEYSTORE: ${{ secrets.KEYSTORE }}
         SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
         SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
       run: |
-        sudo apt install -y openjdk-17-jdk apksigner zipalign
+        sudo apt install -y apksigner zipalign
         git clone https://github.com/ymcx/radon
         cd radon
         echo ${KEYSTORE} | base64 -di > KEYSTORE.jks
