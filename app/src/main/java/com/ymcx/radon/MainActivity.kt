@@ -1,5 +1,6 @@
 package com.ymcx.radon
 
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.graphics.Bitmap
 import android.net.Uri
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+
 
 class MainActivity : AppCompatActivity() {
     private var urlFinished: String = ""
@@ -41,8 +43,8 @@ class MainActivity : AppCompatActivity() {
         webView!!.setLayerType(View.LAYER_TYPE_HARDWARE, null)
         webView!!.settings.javaScriptEnabled = true
         webView!!.settings.cacheMode = WebSettings.LOAD_NO_CACHE
-        if (savedInstanceState == null) {
-            webView!!.loadUrl("https://m.youtube.com/feed/subscriptions/")
+        if (!loadUrlFromIntent(intent)) {
+            webView!!.loadUrl("https://m.youtube.com/");
         }
         webView!!.webChromeClient = object : WebChromeClient() {
             private var mCustomView: View? = null
@@ -101,6 +103,21 @@ class MainActivity : AppCompatActivity() {
             }
             false
         })
+    }
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        loadUrlFromIntent(intent)
+    }
+    private fun loadUrlFromIntent(intent: Intent): Boolean {
+        return if (Intent.ACTION_VIEW == intent.action && intent.data != null) {
+            val url = intent.data.toString()
+            if (url != webView!!.url) {
+                webView!!.loadUrl(url)
+            }
+            true
+        } else {
+            false
+        }
     }
     var js = "[{url: 'https://raw.githubusercontent.com/ymcx/adblocktemp/main/a.js'}]"
     fun exec() {
