@@ -126,7 +126,7 @@ class MainActivity : AppCompatActivity() {
             false
         }
     }
-    var js = "[{url: 'https://raw.githubusercontent.com/ymcx/BlockYouTubeAdsShortcut/master/dist/index.js'}]"
+    var js = "[{url: 'https://raw.githubusercontent.com/adguardteam/BlockYouTubeAdsShortcut/master/dist/index.js'}]"
     fun exec() {
         webView!!.evaluateJavascript("""
             (() => {
