@@ -43,6 +43,13 @@ class MainActivity : AppCompatActivity() {
         webView!!.setLayerType(View.LAYER_TYPE_HARDWARE, null)
         webView!!.settings.javaScriptEnabled = true
         webView!!.settings.cacheMode = WebSettings.LOAD_NO_CACHE
+        webView!!.settings.domStorageEnabled = true
+        webView!!.settings.javaScriptCanOpenWindowsAutomatically = true
+        webView!!.settings.loadsImagesAutomatically = true
+        webView!!.settings.allowFileAccess = true
+        webView!!.settings.useWideViewPort = true
+        webView!!.settings.loadWithOverviewMode = true
+        webView!!.settings.mediaPlaybackRequiresUserGesture = false;
         if (!loadUrlFromIntent(intent)) {
             webView!!.loadUrl("https://m.youtube.com/");
         }
