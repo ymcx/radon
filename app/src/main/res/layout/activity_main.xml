@@ -8,7 +8,7 @@ tools:context=".MainActivity">
         android:id="@+id/swipeContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <WebView
+        <com.ymcx.radon.customWebView
             android:id="@+id/webView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
