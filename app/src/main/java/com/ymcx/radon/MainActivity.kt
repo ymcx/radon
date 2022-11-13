@@ -126,10 +126,13 @@ class MainActivity : AppCompatActivity() {
             false
         }
     }
-    var js = "[{url: 'https://raw.githubusercontent.com/ymcx/adblocktemp/main/a.js'}]"
+    var js = "[{url: 'https://raw.githubusercontent.com/ymcx/BlockYouTubeAdsShortcut/master/dist/index.js'}]"
     fun exec() {
         webView!!.evaluateJavascript("""
             (() => {
+                const style = document.createElement('style');
+                style.textContent = `body {-webkit-tap-highlight-color:transparent !Important;}`;
+                document.head.append(style);
                 var plugins = $js
                 var cache = {};
                 function injectAll() {
