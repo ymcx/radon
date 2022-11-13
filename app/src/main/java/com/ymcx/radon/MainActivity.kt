@@ -15,10 +15,12 @@ import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 class MainActivity : AppCompatActivity() {
     private var urlFinished: String = ""
     var webView: WebView? = null
+    var mySwipeRefreshLayout: SwipeRefreshLayout? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -27,6 +29,14 @@ class MainActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED
         )
         webView = findViewById(R.id.webView)
+        mySwipeRefreshLayout = findViewById<SwipeRefreshLayout>(R.id.swipeContainer)
+        mySwipeRefreshLayout?.setOnRefreshListener {
+            if (webView!!.url!!.contains("/watch?v=", ignoreCase = true)) {
+                mySwipeRefreshLayout?.isRefreshing = false;
+            } else {
+                webView!!.reload();
+            }
+        }
         webView!!.visibility = View.INVISIBLE;
         webView!!.setLayerType(View.LAYER_TYPE_HARDWARE, null)
         webView!!.settings.javaScriptEnabled = true
@@ -68,6 +78,7 @@ class MainActivity : AppCompatActivity() {
         }
         webView!!.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView, url: String) {
+                mySwipeRefreshLayout?.isRefreshing = false;
                 if (urlFinished != url) {
                     val host = Uri.parse(url).host.toString()
                     if (host.contains("m.youtube.com")) {
