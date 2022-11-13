@@ -18,7 +18,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
-
 class MainActivity : AppCompatActivity() {
     private var urlFinished: String = ""
     var webView: WebView? = null
@@ -126,13 +125,10 @@ class MainActivity : AppCompatActivity() {
             false
         }
     }
-    var js = "[{url: 'https://raw.githubusercontent.com/adguardteam/BlockYouTubeAdsShortcut/master/dist/index.js'}]"
+    var js = "[{url: 'https://raw.githubusercontent.com/ymcx/adblock/master/index.js'}]"
     fun exec() {
         webView!!.evaluateJavascript("""
             (() => {
-                const style = document.createElement('style');
-                style.textContent = `body {-webkit-tap-highlight-color:transparent !Important;}`;
-                document.head.append(style);
                 var plugins = $js
                 var cache = {};
                 function injectAll() {
