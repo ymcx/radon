@@ -1,7 +1,5 @@
 package com.ymcx.radon
 
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import android.content.pm.ActivityInfo
 import android.graphics.Bitmap
 import android.net.Uri
@@ -15,6 +13,8 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 
 class MainActivity : AppCompatActivity() {
     private var urlFinished: String = ""
@@ -91,13 +91,10 @@ class MainActivity : AppCompatActivity() {
             false
         })
     }
-    var js = "[{url: 'https://raw.githubusercontent.com/AdguardTeam/BlockYouTubeAdsShortcut/master/dist/index.js'}]"
+    var js = "[{url: 'https://raw.githubusercontent.com/ymcx/adblocktemp/main/a.js'}]"
     fun exec() {
         webView!!.evaluateJavascript("""
             (() => {
-                const style = document.createElement('style');
-                style.textContent = `body {-webkit-tap-highlight-color:transparent !Important;}`;
-                document.head.append(style);
                 var plugins = $js
                 var cache = {};
                 function injectAll() {
