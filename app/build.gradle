@@ -3,13 +3,9 @@ plugins {
     id 'kotlin-android'
 }
 android {
-    compileSdk 33
     defaultConfig {
-        applicationId "com.ymcx.radon"
+        compileSdk 33
         minSdk 33
-        targetSdk 33
-        versionCode 1
-        versionName "1"
     }
     buildTypes {
         release {
@@ -19,15 +15,14 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility(JavaVersion.VERSION_17)
-        targetCompatibility(JavaVersion.VERSION_17)
+        sourceCompatibility(JavaVersion.VERSION_19)
+        targetCompatibility(JavaVersion.VERSION_19)
     }
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
+        jvmTarget = JavaVersion.VERSION_19.toString()
     }
     namespace 'com.ymcx.radon'
 }
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.5.1'
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    implementation 'androidx.appcompat:appcompat:+'
 }
