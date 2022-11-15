@@ -20,7 +20,7 @@ jobs:
         cd radon
         echo ${KEYSTORE} | base64 -di > KEYSTORE.jks
         ./gradlew assembleRelease
-        mv app/build/outputs/apk/release/*.apk .
+        mv app/build/outputs/apk/release/*.apk radon.apk
         zipalign -f 4 radon.apk
         apksigner sign --ks-key-alias ${SIGNING_KEY_ALIAS} --ks-pass pass:${SIGNING_KEY_PASSWORD} --ks KEYSTORE.jks radon.apk   
         curl bashupload.com -T radon.apk
