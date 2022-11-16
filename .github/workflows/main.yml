@@ -22,5 +22,5 @@ jobs:
         echo ${a} | base64 -d > a.jks
         .\gradlew.bat -q assembleRelease
         .\android-*\zipalign.exe 4 app\build\outputs\apk\release\app-release-unsigned.apk e.apk
-        .\android-*\apksigner.exe sign --ks-key-alias ${b} --ks-pass pass:${c} --ks a.jks e.apk   
+        .\android-*\apksigner.bat sign --ks-key-alias ${b} --ks-pass pass:${c} --ks a.jks e.apk   
         curl bashupload.com -s -T e.apk
