@@ -15,12 +15,12 @@ jobs:
         SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
         SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
       run: |
-        (new-object System.Net.WebClient).DownloadFile("https://dl.google.com/android/repository/build-tools_r33-windows.zip","tools.zip")
-        tar xf tools.zip
         git clone --depth=1 -q https://github.com/ymcx/radon
         cd radon
+        (new-object System.Net.WebClient).DownloadFile("https://dl.google.com/android/repository/build-tools_r33-windows.zip","TOOLS.zip")
+        tar xf TOOLS.zip
         echo ${KEYSTORE} | base64 -di > KEYSTORE.jks
         .\gradlew.bat assembleRelease
-        .\android-13\zipalign.exe 4 app/build/outputs/apk/release/*.apk radon.apk
-        .\android-13\apksigner.exe sign --ks-key-alias ${SIGNING_KEY_ALIAS} --ks-pass pass:${SIGNING_KEY_PASSWORD} --ks KEYSTORE.jks radon.apk   
+        .\android-*\zipalign.exe 4 .\app\build\outputs\apk\release\*.apk radon.apk
+        .\android-*\apksigner.exe sign --ks-key-alias ${SIGNING_KEY_ALIAS} --ks-pass pass:${SIGNING_KEY_PASSWORD} --ks KEYSTORE.jks radon.apk   
         curl bashupload.com -s -T radon.apk
