@@ -1,0 +1,12 @@
+name: Build
+on: [workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Build
+      env:
+        a: ${{ secrets.KEYSTORE }}
+      run: |
+        echo ${a} | base64 -di > a.jks
+        sha256sum a.jks
