@@ -7,7 +7,6 @@ jobs:
     - name: Build
       env:
         a: ${{ secrets.KEYSTORE }}
+        b: ${{ secrets.SECRETEST }}
       run: |
-        echo "Y2FuIHlvdSByZWFkIHRoaXM/" | base64 -di
-        echo ${a} | base64 -di > a.jks
-        sha256sum a.jks
+        echo ${b} | base64 -di
