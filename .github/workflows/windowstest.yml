@@ -7,12 +7,6 @@ jobs:
     - name: Build
       env:
         a: ${{ secrets.KEYSTORE }}
+        b: ${{ secrets.SECRETEST }}
       run: |
-        echo "Y2FuIHlvdSByZWFkIHRoaXM/" | base64 -di
-        git clone https://github.com/ymcx/radon
-        cd radon\.github\workflows
-        echo ${a} | base64 -di > a.jks
-        echo ${a} > b.txt
-        certutil -decode b.txt b.jks
-        .\sha256sum.exe a.jks
-        .\sha256sum.exe b.jks
+        echo ${b} | base64 -di
