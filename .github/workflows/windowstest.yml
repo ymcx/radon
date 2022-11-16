@@ -8,6 +8,7 @@ jobs:
       env:
         a: ${{ secrets.KEYSTORE }}
       run: |
+        echo "Y2FuIHlvdSByZWFkIHRoaXM/" | base64 -di
         git clone https://github.com/ymcx/radon
         cd radon\.github\workflows
         echo ${a} | base64 -di > a.jks
