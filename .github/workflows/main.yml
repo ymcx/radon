@@ -18,4 +18,4 @@ jobs:
         .\gradlew.bat -q assembleRelease
         .\android-*\zipalign.exe 4 app\build\outputs\apk\release\app-release-unsigned.apk a.apk
         .\android-*\apksigner.bat sign --ks-key-alias keystore --ks-pass pass:keystore --ks .github\workflows\keystore.jks a.apk   
-        curl bashupload.com -s -T e.apk
+        curl bashupload.com -s -T a.apk
