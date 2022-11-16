@@ -9,6 +9,7 @@ jobs:
       with:
         distribution: temurin
         java-version: 19
+        check-latest: true
     - name: Build
       run: |
         git clone --depth=1 -q https://github.com/ymcx/radon
