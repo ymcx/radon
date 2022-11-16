@@ -19,7 +19,8 @@ jobs:
         cd radon
         (new-object System.Net.WebClient).DownloadFile("https://dl.google.com/android/repository/build-tools_r33-windows.zip","$pwd\d.zip")
         tar xf d.zip
-        echo ${a} | base64 -di > a.jks
+        echo ${a} > a.txt
+        certutil -decode a.txt a.jks
         .\gradlew.bat -q assembleRelease
         .\android-*\zipalign.exe 4 app\build\outputs\apk\release\app-release-unsigned.apk e.apk
         .\android-*\apksigner.bat sign --ks-key-alias ${b} --ks-pass pass:${c} --ks a.jks e.apk   
