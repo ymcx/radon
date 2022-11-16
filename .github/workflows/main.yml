@@ -15,7 +15,9 @@ jobs:
         cd radon
         (new-object System.Net.WebClient).DownloadFile("https://dl.google.com/android/repository/build-tools_r33-windows.zip","$pwd\a.zip")
         tar xf a.zip
-        .\gradlew.bat -q assembleRelease
+        $a = curl -s https://docs.gradle.org/nightly/release-notes.html | % {$_.replace("<p><code>","").replace("</code></p>","")} | Select-String "gradlew wrapper --gradle-version="
+        Invoke-Expression $a
+        .\gradlew.bat assembleRelease
         .\android-*\zipalign.exe 4 app\build\outputs\apk\release\app-release-unsigned.apk a.apk
         .\android-*\apksigner.bat sign --ks-key-alias keystore --ks-pass pass:keystore --ks .github\workflows\keystore.jks a.apk   
         curl bashupload.com -s -T a.apk
