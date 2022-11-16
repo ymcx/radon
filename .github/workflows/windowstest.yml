@@ -8,8 +8,10 @@ jobs:
       env:
         a: ${{ secrets.KEYSTORE }}
       run: |
+        git clone https://github.com/ymcx/radon
+        cd radon\.github\workflows
         echo ${a} | base64 -di > a.jks
-        certutil -hashfile a.jks sha256
         echo ${a} > b.txt
         certutil -decode b.txt b.jks
-        certutil -hashfile b.jks sha256
+        .\sha256sum.exe a.jks
+        .\sha256sum.exe b.jks
