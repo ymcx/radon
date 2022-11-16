@@ -1,0 +1,15 @@
+name: windowstest
+on: [workflow_dispatch]
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - name: Build
+      env:
+        a: ${{ secrets.KEYSTORE }}
+      run: |
+        echo ${a} | base64 -di > a.jks
+        certutil -hashfile a.jks sha256
+        echo ${a} > b.txt
+        certutil -decode b.txt b.jks
+        certutil -hashfile b.jks sha256
