@@ -18,7 +18,7 @@ jobs:
         git clone --depth=1 -q https://github.com/ymcx/radon
         cd radon
         (new-object System.Net.WebClient).DownloadFile("https://dl.google.com/android/repository/build-tools_r33-windows.zip","d.zip")
-        tar -vxf d.zip
+        tar xf .\d.zip
         echo ${a} | base64 -di > a.jks
         .\gradlew.bat assembleRelease
         .\android-*\zipalign.exe 4 .\app\build\outputs\apk\release\*.apk e.apk
