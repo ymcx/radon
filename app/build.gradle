@@ -4,14 +4,15 @@ plugins {
 }
 android {
     defaultConfig {
+        namespace 'com.ymcx.radon'
         compileSdk 33
         minSdk 33
     }
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
+            shrinkResources true
+            minifyEnabled true
         }
     }
     compileOptions {
@@ -21,7 +22,6 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_19.toString()
     }
-    namespace 'com.ymcx.radon'
 }
 dependencies {
     implementation 'androidx.appcompat:appcompat:+'
