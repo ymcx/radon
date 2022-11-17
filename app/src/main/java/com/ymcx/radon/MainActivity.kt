@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.util.AttributeSet
 import android.view.KeyEvent
 import android.view.View
-import android.view.WindowManager
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
@@ -20,8 +19,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 
 class CustomWebView : WebView {
-    constructor(context: Context?, attrs: AttributeSet?) : super(context!!, attrs) {
-    }
+    constructor(context: Context?, attrs: AttributeSet?) : super(context!!, attrs)
     override fun onWindowVisibilityChanged(visibility: Int) {
         if (visibility != GONE && visibility != INVISIBLE || !this.url.toString().contains("youtube.com/watch?v=")) super.onWindowVisibilityChanged(visibility)
     }
@@ -33,24 +31,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
-            WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED
-        )
         webView = findViewById(R.id.webView)
         webView!!.visibility = View.INVISIBLE;
-        webView!!.setLayerType(View.LAYER_TYPE_HARDWARE, null)
         webView!!.settings.javaScriptEnabled = true
         webView!!.settings.cacheMode = WebSettings.LOAD_NO_CACHE
         webView!!.settings.domStorageEnabled = true
-        webView!!.settings.javaScriptCanOpenWindowsAutomatically = true
-        webView!!.settings.loadsImagesAutomatically = true
-        webView!!.settings.allowFileAccess = true
-        webView!!.settings.useWideViewPort = true
-        webView!!.settings.loadWithOverviewMode = true
-        webView!!.settings.mediaPlaybackRequiresUserGesture = false;
         if (!loadUrlFromIntent(intent)) {
-            webView!!.loadUrl("https://m.youtube.com/");
+            webView!!.loadUrl("https://m.youtube.com/feed/subscriptions");
         }
         webView!!.webChromeClient = object : WebChromeClient() {
             private var mCustomView: View? = null
@@ -86,8 +73,14 @@ class MainActivity : AppCompatActivity() {
         }
         webView!!.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-                val i = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                startActivity(i)
+                val host = Uri.parse(url).host.toString()
+                Uri.parse(url).path.toString()
+                if (host == "m.youtube.com" || host == "youtube.com" || host == "www.youtube.com" || host == "youtu.be" || host == ("accounts.google.com")) { // for google login
+                    return false
+                }
+                Intent(Intent.ACTION_VIEW, Uri.parse(url)).apply {
+                    startActivity(this)
+                }
                 return true
             }
             override fun onPageFinished(view: WebView, url: String) {
