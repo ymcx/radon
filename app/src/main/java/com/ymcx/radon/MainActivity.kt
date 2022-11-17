@@ -85,6 +85,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
         webView!!.webViewClient = object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+                val i = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                startActivity(i)
+                return true
+            }
             override fun onPageFinished(view: WebView, url: String) {
                 if (urlFinished != url) {
                     val host = Uri.parse(url).host.toString()
