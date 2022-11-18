@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
                 val host = Uri.parse(url).host.toString()
                 Uri.parse(url).path.toString()
-                if (host == "m.youtube.com" || host == "youtube.com" || host == "www.youtube.com" || host == "youtu.be" || host.contains("accounts") { // for google login
+                if (host == "m.youtube.com" || host == "youtube.com" || host == "www.youtube.com" || host == "youtu.be" || host.contains("accounts")) { // for google login
                     return false
                 }
                 Intent(Intent.ACTION_VIEW, Uri.parse(url)).apply {
