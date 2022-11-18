@@ -1,16 +1,5 @@
 (() => {
   function runBlockYoutube() {
-    const allowedHostnames = [
-      "m.youtube.com"
-    ];
-    if (!allowedHostnames.includes(window.location.hostname)) {
-      document.body.style.backgroundColor = "red";
-      return {
-        success: false,
-        status: "wrongDomain",
-        message: "wrongDomain"
-      };
-    }
     const pageScript = () => {
       const hiddenCSS = {
         "m.youtube.com": [
@@ -99,7 +88,7 @@
         });
       };
       //jsonOverride("adPlacements", []);
-      //jsonOverride("playerAds", []);
+      jsonOverride("playerAds", []);
       hideElements(window.location.hostname);
       hideDynamicAds();
     };
