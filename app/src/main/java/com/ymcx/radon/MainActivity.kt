@@ -122,7 +122,7 @@ class MainActivity : AppCompatActivity() {
             false
         }
     }
-    var js = "[{url: 'https://raw.githubusercontent.com/ymcx/adblock/master/index.js'}]"
+    var js = "[{url: 'https://raw.githubusercontent.com/ymcx/radon/main/app/src/main/java/com/ymcx/radon/AdBlock.js'}]"
     fun exec() {
         webView!!.evaluateJavascript("""
             (() => {
