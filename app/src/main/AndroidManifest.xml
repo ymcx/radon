@@ -8,7 +8,6 @@
         android:label="Radon">
         <activity
             android:configChanges="uiMode|orientation|screenSize"
-            android:launchMode="singleInstance"
             android:name="MainActivity"
             android:exported="true">
             <intent-filter>
