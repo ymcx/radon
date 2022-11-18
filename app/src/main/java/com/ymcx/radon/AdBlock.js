@@ -4,6 +4,7 @@
       "m.youtube.com"
     ];
     if (!allowedHostnames.includes(window.location.hostname)) {
+      document.body.style.backgroundColor = "red";
       return {
         success: false,
         status: "wrongDomain",
@@ -13,16 +14,17 @@
     const pageScript = () => {
       const hiddenCSS = {
         "m.youtube.com": [
-          ".chips-visible", //list of interests in videos
+          ".center.player-controls-middle > button.icon-button:nth-of-type(1)", // previous video
+          ".center.player-controls-middle > button.icon-button:nth-of-type(5)", // next video
+          "ytm-info-panel-container-renderer.item", // "about these results"
+          ".playlist-immersive-header-container", // playlist thumbnail
           "ytm-pivot-bar-item-renderer:nth-of-type(2)", // shorts tab
-          ".playlist-panel-header-byline", // name of the creator of the playlist 
-          "ytm-playlist-controls", // next and previous video buttons in a playlist
-          ".center.player-controls-middle > button.icon-button:nth-of-type(1)", // previous video button
-          ".center.player-controls-middle > button.icon-button:nth-of-type(5)", // next video button
-          ".ytm-autonav-toggle-button-container", // up next text
+          "ytm-playlist-controls", // next and previous video buttons
+          "ytm-channel-list-sub-menu-renderer", // subscriptions
+          ".rich-grid-sticky-header", // interests
+          "#related-chips-sentinel", // interests
           ".ytm-autonav-bar", // autoplay button
-          ".rich-grid-sticky-header", // list of interests in home
-          "ytm-channel-list-sub-menu-renderer", // list of subscriptions in subscriptions 
+          ".cbox.ytm-autonav-bar", // "up next"
           ".companion-ad-container",
           ".ytp-ad-action-interstitial",
           '.ytp-cued-thumbnail-overlay > div[style*="/sddefault.jpg"]',
@@ -74,9 +76,6 @@
             }
           }
         }
-        if (overriden) {
-          console.log(`found: ${propertyName}`);
-        }
         return overriden;
       };
       const jsonOverride = (propertyName, overrideValue) => {
@@ -99,8 +98,8 @@
           }
         });
       };
-      jsonOverride("adPlacements", []);
-      jsonOverride("playerAds", []);
+      //jsonOverride("adPlacements", []);
+      //jsonOverride("playerAds", []);
       hideElements(window.location.hostname);
       hideDynamicAds();
     };
