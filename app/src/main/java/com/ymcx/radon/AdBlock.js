@@ -20,10 +20,10 @@
           ".playlist-immersive-header-container", // playlist thumbnail
           "ytm-pivot-bar-item-renderer:nth-of-type(2)", // shorts tab
           "ytm-playlist-controls", // next and previous video buttons
+          ".ytm-autonav-toggle-button-container", // autoplay button
           "ytm-channel-list-sub-menu-renderer", // subscriptions
           ".rich-grid-sticky-header", // interests
           "#related-chips-sentinel", // interests
-          ".ytm-autonav-bar", // autoplay button
           ".cbox.ytm-autonav-bar", // "up next"
           ".companion-ad-container",
           ".ytp-ad-action-interstitial",
