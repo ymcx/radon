@@ -87,7 +87,7 @@
           }
         });
       };
-      //jsonOverride("adPlacements", []);
+      jsonOverride("adPlacements", []);
       jsonOverride("playerAds", []);
       hideElements(window.location.hostname);
       hideDynamicAds();
