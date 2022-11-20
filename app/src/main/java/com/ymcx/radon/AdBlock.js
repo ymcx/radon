@@ -6,7 +6,6 @@
           ".playlist-immersive-header-container", // playlist thumbnail
           "ytm-pivot-bar-item-renderer:nth-of-type(2)", // shorts tab
           "ytm-playlist-controls", // next and previous video buttons
-          ".ytm-autonav-toggle-button-container", // autoplay button
           "ytm-channel-list-sub-menu-renderer", // subscriptions
           ".rich-grid-sticky-header", // interests
           "#related-chips-sentinel", // interests
@@ -18,7 +17,7 @@
           //`a[onclick*='"ping_url":"http://www.google.com/aclk?']`,
           "ytm-companion-ad-renderer",
           "ytm-companion-slot",
-          "ytm-promoted-sparkles-text-search-renderer",
+          //"ytm-promoted-sparkles-text-search-renderer",
           "ytm-promoted-sparkles-web-renderer",
           "ytm-promoted-video-renderer"
         ]
