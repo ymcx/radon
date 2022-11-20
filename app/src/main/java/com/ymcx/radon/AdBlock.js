@@ -1,7 +1,7 @@
 (() => {
     const pageScript = () => {
       const hiddenCSS = {
-        "m.youtube.com": [
+        "yt": [
           "ytm-info-panel-container-renderer.item", // "about these results"
           ".playlist-immersive-header-container", // playlist thumbnail
           "ytm-pivot-bar-item-renderer:nth-of-type(2)", // shorts tab
@@ -23,14 +23,10 @@
           "ytm-promoted-video-renderer"
         ]
       };
-      const hideElements = (hostname) => {
-        const selectors = hiddenCSS[hostname];
-        if (!selectors) {
-          return;
-        }
-        const rule = `${selectors.join(", ")} {display:none !important;} \n body {-webkit-tap-highlight-color:transparent !important;}`;
+      const hideElements = () => {
+        const selectors = hiddenCSS[yt];
         const style = document.createElement("style");
-        style.innerHTML = rule;
+        style.innerHTML = `${selectors.join(", ")} {display:none !important;} \n body {-webkit-tap-highlight-color:transparent !important;}`;
         document.head.appendChild(style);
       };
       const hideDynamicAds = () => {
@@ -86,7 +82,7 @@
       };
       jsonOverride("adPlacements", []);
       jsonOverride("playerAds", []);
-      hideElements(window.location.hostname);
+      hideElements();
       hideDynamicAds();
     };
     const script = document.createElement("script");
