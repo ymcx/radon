@@ -1,7 +1,7 @@
 (() => {
     const pageScript = () => {
       const hiddenCSS = {
-        "yt": [
+        "m.youtube.com": [
           "ytm-info-panel-container-renderer.item", // "about these results"
           ".playlist-immersive-header-container", // playlist thumbnail
           "ytm-pivot-bar-item-renderer:nth-of-type(2)", // shorts tab
@@ -15,7 +15,7 @@
           ".ytp-ad-action-interstitial",
           '.ytp-cued-thumbnail-overlay > div[style*="/sddefault.jpg"]',
           `a[href^="/watch?v="][onclick^="return koya.onEvent(arguments[0]||window.event,'"]:not([role]):not([class]):not([id])`,
-          `a[onclick*='"ping_url":"http://www.google.com/aclk?']`,
+          //`a[onclick*='"ping_url":"http://www.google.com/aclk?']`,
           "ytm-companion-ad-renderer",
           "ytm-companion-slot",
           "ytm-promoted-sparkles-text-search-renderer",
@@ -23,11 +23,10 @@
           "ytm-promoted-video-renderer"
         ]
       };
-      const hideElements = () => {
-        const selectors = hiddenCSS[yt];
+      const hideElements = (hostname) => {
+        const selectors = hiddenCSS[hostname];
         const style = document.createElement("style");
-        const rule = `${selectors.join(", ")} {display:none !important;} \n body {-webkit-tap-highlight-color:transparent !important;}`;
-        style.innerHTML = rule;
+        style.innerHTML = `${selectors.join(", ")} {display:none !important;} \n body {-webkit-tap-highlight-color:transparent !important;}`;
         document.head.appendChild(style);
       };
       const hideDynamicAds = () => {
@@ -83,7 +82,7 @@
       };
       jsonOverride("adPlacements", []);
       jsonOverride("playerAds", []);
-      hideElements();
+      hideElements(window.location.hostname);
       hideDynamicAds();
     };
     const script = document.createElement("script");
