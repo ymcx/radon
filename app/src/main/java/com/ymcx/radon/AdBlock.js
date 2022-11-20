@@ -61,12 +61,14 @@
         return overriden;
       };
       const jsonOverride = (propertyName, overrideValue) => {
+        const nativeJSONParse = JSON.parse;
         JSON.parse = (...args) => {
-          const obj = JSON.parse.apply(this, args);
+          const obj = nativeJSONParse.apply(this, args);
           overrideObject(obj, propertyName, overrideValue);
           return obj;
         };
-        Response.prototype.json = new Proxy(Response.prototype.json, {
+        const nativeResponseJson = Response.prototype.json;
+        Response.prototype.json = new Proxy(nativeResponseJson, {
           apply(...args) {
             const promise = Reflect.apply(args);
             return new Promise((resolve, reject) => {
