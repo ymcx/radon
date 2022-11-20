@@ -84,7 +84,8 @@
       hideDynamicAds();
     };
     const script = document.createElement("script");
-    script.innerHTML = `(` + pageScript.toString() + `)();`;
+    const scriptText = pageScript.toString();
+    script.innerHTML = `(${scriptText})();`;
     document.head.appendChild(script);
     document.head.removeChild(script);
 })();
