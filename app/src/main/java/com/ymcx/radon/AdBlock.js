@@ -1,10 +1,7 @@
 (() => {
-  function runBlockYoutube() {
     const pageScript = () => {
       const hiddenCSS = {
         "m.youtube.com": [
-          ".center.player-controls-middle > button.icon-button:nth-of-type(1)", // previous video
-          ".center.player-controls-middle > button.icon-button:nth-of-type(5)", // next video
           "ytm-info-panel-container-renderer.item", // "about these results"
           ".playlist-immersive-header-container", // playlist thumbnail
           "ytm-pivot-bar-item-renderer:nth-of-type(2)", // shorts tab
@@ -97,24 +94,4 @@
     script.innerHTML = `(${scriptText})();`;
     document.head.appendChild(script);
     document.head.removeChild(script);
-    return {
-      success: true,
-      status: "success",
-      message: "success"
-    };
-  }
-  (() => {
-    let finish = (m) => {
-      console.log(m);
-    };
-    if (typeof completion !== "undefined") {
-      finish = completion;
-    }
-    try {
-      const result = runBlockYoutube();
-      finish(result.message);
-    } catch (ex) {
-      finish(ex.toString());
-    }
-  })();
 })();
