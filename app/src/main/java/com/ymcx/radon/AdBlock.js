@@ -61,14 +61,12 @@
         return overriden;
       };
       const jsonOverride = (propertyName, overrideValue) => {
-        const nativeJSONParse = JSON.parse;
         JSON.parse = (...args) => {
-          const obj = nativeJSONParse.apply(this, args);
+          const obj = JSON.parse.apply(this, args);
           overrideObject(obj, propertyName, overrideValue);
           return obj;
         };
-        const nativeResponseJson = Response.prototype.json;
-        Response.prototype.json = new Proxy(nativeResponseJson, {
+        Response.prototype.json = new Proxy(Response.prototype.json, {
           apply(...args) {
             const promise = Reflect.apply(args);
             return new Promise((resolve, reject) => {
@@ -86,8 +84,7 @@
       hideDynamicAds();
     };
     const script = document.createElement("script");
-    const scriptText = pageScript.toString();
-    script.innerHTML = `(${scriptText})();`;
+    script.innerHTML = `(pageScript.toString();)();`;
     document.head.appendChild(script);
     document.head.removeChild(script);
 })();
