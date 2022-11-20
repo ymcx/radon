@@ -13,8 +13,8 @@
           ".cbox.ytm-autonav-bar", // "up next"
           ".companion-ad-container",
           ".ytp-ad-action-interstitial",
-          '.ytp-cued-thumbnail-overlay > div[style*="/sddefault.jpg"]',
-          `a[href^="/watch?v="][onclick^="return koya.onEvent(arguments[0]||window.event,'"]:not([role]):not([class]):not([id])`,
+          //'.ytp-cued-thumbnail-overlay > div[style*="/sddefault.jpg"]',
+          //`a[href^="/watch?v="][onclick^="return koya.onEvent(arguments[0]||window.event,'"]:not([role]):not([class]):not([id])`,
           //`a[onclick*='"ping_url":"http://www.google.com/aclk?']`,
           "ytm-companion-ad-renderer",
           "ytm-companion-slot",
