@@ -26,7 +26,8 @@
       const hideElements = () => {
         const selectors = hiddenCSS[yt];
         const style = document.createElement("style");
-        style.innerHTML = `${selectors.join(", ")} {display:none !important;} \n body {-webkit-tap-highlight-color:transparent !important;}`;
+        const rule = `${selectors.join(", ")} {display:none !important;} \n body {-webkit-tap-highlight-color:transparent !important;}`;
+        style.innerHTML = rule;
         document.head.appendChild(style);
       };
       const hideDynamicAds = () => {
