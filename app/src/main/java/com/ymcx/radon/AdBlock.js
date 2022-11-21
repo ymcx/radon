@@ -2,22 +2,12 @@
     const pageScript = () => {
       const hiddenCSS = {
         "m.youtube.com": [
-          "ytm-info-panel-container-renderer.item", // "about these results"
-          ".playlist-immersive-header-container", // playlist thumbnail
-          "ytm-pivot-bar-item-renderer:nth-of-type(2)", // shorts tab
-          "ytm-playlist-controls", // next and previous video buttons
-          "ytm-channel-list-sub-menu-renderer", // subscriptions
-          ".rich-grid-sticky-header", // interests
-          "#related-chips-sentinel", // interests
-          ".cbox.ytm-autonav-bar", // "up next"
+          "ytm-pivot-bar-item-renderer:nth-of-type(2)",
+          "ytm-channel-list-sub-menu-renderer",
           ".companion-ad-container",
           ".ytp-ad-action-interstitial",
-          //'.ytp-cued-thumbnail-overlay > div[style*="/sddefault.jpg"]',
-          //`a[href^="/watch?v="][onclick^="return koya.onEvent(arguments[0]||window.event,'"]:not([role]):not([class]):not([id])`,
-          //`a[onclick*='"ping_url":"http://www.google.com/aclk?']`,
           "ytm-companion-ad-renderer",
           "ytm-companion-slot",
-          //"ytm-promoted-sparkles-text-search-renderer",
           "ytm-promoted-sparkles-web-renderer",
           "ytm-promoted-video-renderer"
         ]
@@ -80,7 +70,7 @@
         });
       };
       jsonOverride("adPlacements", []);
-      jsonOverride("playerAds", []);
+      //jsonOverride("playerAds", []);
       hideElements(window.location.hostname);
       hideDynamicAds();
     };
