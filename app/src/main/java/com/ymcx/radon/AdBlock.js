@@ -1,9 +1,10 @@
 (() => {
     const pageScript = () => {
       const hiddenCSS = {
-        "m.youtube.com": [
-          ".companion-ad-container",
-          ".ytp-ad-action-interstitial",
+        "m.youtube.com": [   
+          "ytm-channel-list-sub-menu-renderer",
+          //".companion-ad-container",
+          //".ytp-ad-action-interstitial",
           "ytm-companion-ad-renderer",
           "ytm-companion-slot",
           "ytm-promoted-sparkles-web-renderer",
