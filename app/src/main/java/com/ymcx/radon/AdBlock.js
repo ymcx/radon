@@ -2,8 +2,6 @@
     const pageScript = () => {
       const hiddenCSS = {
         "m.youtube.com": [
-          "ytm-pivot-bar-item-renderer:nth-of-type(2)",
-          "ytm-channel-list-sub-menu-renderer",
           ".companion-ad-container",
           ".ytp-ad-action-interstitial",
           "ytm-companion-ad-renderer",
@@ -70,7 +68,6 @@
         });
       };
       jsonOverride("adPlacements", []);
-      //jsonOverride("playerAds", []);
       hideElements(window.location.hostname);
       hideDynamicAds();
     };
