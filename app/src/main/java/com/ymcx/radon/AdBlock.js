@@ -2,7 +2,7 @@
     const pageScript = () => {
       const hideElements = (hostname) => {
         const style = document.createElement("style");
-        style.innerHTML = `"ytm-channel-list-sub-menu-renderer" {display:none!important;} \n "ytm-companion-ad-renderer" {display:none!important;} \n "ytm-companion-slot" {display:none!important;} \n "ytm-promoted-sparkles-web-renderer" {display:none!important;} \n "ytm-promoted-video-renderer" {display:none!important;} \n body {-webkit-tap-highlight-color:transparent !important;}`;
+        style.innerHTML = `"ytm-channel-list-sub-menu-renderer" {display:none !important;} \n "ytm-companion-ad-renderer" {display:none !important;} \n "ytm-companion-slot" {display:none !important;} \n "ytm-promoted-sparkles-web-renderer" {display:none !important;} \n "ytm-promoted-video-renderer" {display:none !important;} \n body {-webkit-tap-highlight-color:transparent !important;}`;
         document.head.appendChild(style);
       };
       const hideDynamicAds = () => {
