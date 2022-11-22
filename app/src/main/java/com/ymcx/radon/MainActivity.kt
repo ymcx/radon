@@ -18,13 +18,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 
-class CustomWebView : WebView {
-    constructor(context: Context?, attrs: AttributeSet?) : super(context!!, attrs)
-    override fun onWindowVisibilityChanged(visibility: Int) {
-        if (visibility != GONE && visibility != INVISIBLE || !this.url.toString().contains("youtube.com/watch?v=")) super.onWindowVisibilityChanged(visibility)
-    }
-}
-
 class MainActivity : AppCompatActivity() {
     private var urlFinished: String = ""
     var webView: WebView? = null
