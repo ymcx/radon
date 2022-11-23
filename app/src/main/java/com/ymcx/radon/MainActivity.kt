@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         webView!!.webChromeClient = object : WebChromeClient() {
             private var mCustomView: View? = null
             override fun onHideCustomView() {
-                requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+                requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
                 WindowInsetsControllerCompat(window, window.decorView).apply {
                     show(WindowInsetsCompat.Type.systemBars())
                 }
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
                 paramView: View?,
                 paramCustomViewCallback: CustomViewCallback?
             ) {
-                requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+                requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE;
                 WindowInsetsControllerCompat(window, window.decorView).apply {
                     hide(WindowInsetsCompat.Type.systemBars())
                     systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
