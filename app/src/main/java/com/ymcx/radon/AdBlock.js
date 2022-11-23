@@ -1,11 +1,9 @@
 (() => {
     const pageScript = () => {
-      const hideElements = (hostname) => {
+      const hideAds = () => {
         const style = document.createElement("style");
         style.innerHTML = `ytm-channel-list-sub-menu-renderer, ytm-companion-slot, ytm-promoted-sparkles-web-renderer {display:none!important;} \n body {-webkit-tap-highlight-color:transparent!important;}`;
         document.head.appendChild(style);
-      };
-      const hideDynamicAds = () => {
         const elements = document.querySelectorAll("#contents > ytd-rich-item-renderer ytd-display-ad-renderer");
         if (elements.length === 0) {
           return;
@@ -57,8 +55,7 @@
         });
       };
       jsonOverride("adPlacements", []);
-      hideElements(window.location.hostname);
-      hideDynamicAds();
+      hideAds();
     };
     const script = document.createElement("script");
     const scriptText = pageScript.toString();
