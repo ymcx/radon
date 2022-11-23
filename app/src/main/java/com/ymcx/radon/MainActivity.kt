@@ -1,12 +1,10 @@
 package com.ymcx.radon
 
-import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.util.AttributeSet
 import android.view.KeyEvent
 import android.view.View
 import android.webkit.WebChromeClient
@@ -115,36 +113,72 @@ class MainActivity : AppCompatActivity() {
             false
         }
     }
-    var js = "[{url: 'https://raw.githubusercontent.com/ymcx/radon/main/app/src/main/java/com/ymcx/radon/AdBlock.js'}]"
     fun exec() {
         webView!!.evaluateJavascript("""
-            (() => {
-                var plugins = $js
-                var cache = {};
-                function injectAll() {
-                    for (var i = 0; i < plugins.length; i++) {
-                        injectScript(plugins[i].url);
-                    }
-                }
-                function injectScript(url) {
-                    if (cache[url]) {
-                        eval(cache[url]);
-                    } else {
-                        var xhr = new XMLHttpRequest();
-                        xhr.open("GET", url, true);
-                        xhr.onreadystatechange = function () {
-                            if (xhr.readyState == 4) {
-                                if (xhr.status == 200) {
-                                    cache[url] = xhr.responseText;
-                                    eval(xhr.responseText);
-                                }
-                            }
-                        }
-                        xhr.send();
-                    }
-                }
-                injectAll()
-            })();
+(() => {
+    const pageScript = () => {
+      const hideAds = () => {
+        const style = document.createElement("style");
+        style.innerHTML = `ytm-channel-list-sub-menu-renderer, ytm-companion-slot, ytm-promoted-sparkles-web-renderer {display:none!important;} \n body {-webkit-tap-highlight-color:transparent!important;}`;
+        document.head.appendChild(style);
+        const elements = document.querySelectorAll("#contents > ytd-rich-item-renderer ytd-display-ad-renderer");
+        if (elements.length === 0) {
+          return;
+        }
+        elements.forEach((el) => {
+          if (el.parentNode && el.parentNode.parentNode) {
+            const parent = el.parentNode.parentNode;
+            if (parent.localName === "ytd-rich-item-renderer") {
+              parent.style.display = "none";
+            }
+          }
+        });
+      };
+      const overrideObject = (obj, propertyName, overrideValue) => {
+        if (!obj) {
+          return false;
+        }
+        let overriden = false;
+        for (const key in obj) {
+          if (obj.hasOwnProperty(key) && key === propertyName) {
+            obj[key] = overrideValue;
+            overriden = true;
+          } else if (obj.hasOwnProperty(key) && typeof obj[key] === "object") {
+            if (overrideObject(obj[key], propertyName, overrideValue)) {
+              overriden = true;
+            }
+          }
+        }
+        return overriden;
+      };
+      const jsonOverride = (propertyName, overrideValue) => {
+        const nativeJSONParse = JSON.parse;
+        JSON.parse = (...args) => {
+          const obj = nativeJSONParse.apply(this, args);
+          overrideObject(obj, propertyName, overrideValue);
+          return obj;
+        };
+        const nativeResponseJson = Response.prototype.json;
+        Response.prototype.json = new Proxy(nativeResponseJson, {
+          apply(...args) {
+            const promise = Reflect.apply(args);
+            return new Promise((resolve, reject) => {
+              promise.then((data) => {
+                overrideObject(data, propertyName, overrideValue);
+                resolve(data);
+              }).catch((error) => reject(error));
+            });
+          }
+        });
+      };
+      jsonOverride("adPlacements", []);
+      hideAds();
+    };
+    const script = document.createElement("script");
+    script.innerHTML = `(`+pageScript.toString()+`)();`;
+    document.head.appendChild(script);
+    document.head.removeChild(script);
+})();
         """.trimIndent(), null)
     }
 }
