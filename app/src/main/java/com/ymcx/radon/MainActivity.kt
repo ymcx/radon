@@ -5,7 +5,6 @@ import android.content.pm.ActivityInfo
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
@@ -17,18 +16,17 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 
 class MainActivity : AppCompatActivity() {
-    private var urlFinished: String = ""
     var webView: WebView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         webView = findViewById(R.id.webView)
-        webView!!.visibility = View.INVISIBLE;
+        webView!!.visibility = View.INVISIBLE
         webView!!.settings.javaScriptEnabled = true
-        webView!!.settings.cacheMode = WebSettings.LOAD_NO_CACHE
+        //webView!!.settings.cacheMode = WebSettings.LOAD_NO_CACHE
         webView!!.settings.domStorageEnabled = true
         if (!loadUrlFromIntent(intent)) {
-            webView!!.loadUrl("https://m.youtube.com/feed/subscriptions");
+            webView!!.loadUrl("https://m.youtube.com/feed/subscriptions")
         }
         webView!!.webChromeClient = object : WebChromeClient() {
             private var mCustomView: View? = null
@@ -38,83 +36,40 @@ class MainActivity : AppCompatActivity() {
                     show(WindowInsetsCompat.Type.systemBars())
                 }
                 (this@MainActivity.window.decorView as FrameLayout).removeView(mCustomView)
-                mCustomView = null
             }
             override fun onShowCustomView(
                 paramView: View?,
                 paramCustomViewCallback: CustomViewCallback?
             ) {
-                requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE;
+                requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
                 WindowInsetsControllerCompat(window, window.decorView).apply {
                     hide(WindowInsetsCompat.Type.systemBars())
                     systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
                 }
                 mCustomView = paramView
-                (this@MainActivity.window.decorView as FrameLayout).addView(
-                    mCustomView,
-                    FrameLayout.LayoutParams(-1, -1)
-                )
+                (this@MainActivity.window.decorView as FrameLayout).addView(mCustomView)
             }
             override fun onProgressChanged(view: WebView, progress: Int) {
-                if (progress == 100) webView!!.visibility = View.VISIBLE;
+                if (progress == 100) {
+                    webView!!.visibility = View.VISIBLE
+                }
             }
             override fun getDefaultVideoPoster(): Bitmap? {
-                return Bitmap.createBitmap(10, 10, Bitmap.Config.ARGB_8888);
+                return Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
             }
         }
         webView!!.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-                val host = Uri.parse(url).host.toString()
-                Uri.parse(url).path.toString()
-                if (host == "m.youtube.com" || host == "youtube.com" || host == "www.youtube.com" || host == "youtu.be" || host.contains("accounts")) { // for google login
-                    return false
-                }
                 Intent(Intent.ACTION_VIEW, Uri.parse(url)).apply {
                     startActivity(this)
                 }
-                return true
+                return when (Uri.parse(url).host) {
+                    "m.youtube.com", "youtube.com", "www.youtube.com", "youtu.be", "accounts.google.com" -> false
+                    else -> true
+                }
             }
             override fun onPageFinished(view: WebView, url: String) {
-                if (urlFinished != url) {
-                    val host = Uri.parse(url).host.toString()
-                    if (host.contains("m.youtube.com")) {
-                        exec()
-                    }
-                }
-                urlFinished = url
-                super.onPageFinished(view, url)
-            }
-        }
-        webView!!.setOnKeyListener(View.OnKeyListener { _: View?, keyCode: Int, keyEvent: KeyEvent ->
-            if (keyEvent.action != KeyEvent.ACTION_DOWN) return@OnKeyListener true
-            if (keyCode == KeyEvent.KEYCODE_BACK) {
-                if (webView!!.canGoBack()) {
-                    webView!!.goBack()
-                } else {
-                    finish()
-                }
-                return@OnKeyListener true
-            }
-            false
-        })
-    }
-    override fun onNewIntent(intent: Intent) {
-        super.onNewIntent(intent)
-        loadUrlFromIntent(intent)
-    }
-    private fun loadUrlFromIntent(intent: Intent): Boolean {
-        return if (Intent.ACTION_VIEW == intent.action && intent.data != null) {
-            val url = intent.data.toString()
-            if (url != webView!!.url) {
-                webView!!.loadUrl(url)
-            }
-            true
-        } else {
-            false
-        }
-    }
-    fun exec() {
-        webView!!.evaluateJavascript("""
+                webView!!.evaluateJavascript("""
 (() => {
     const pageScript = () => {
       const hideAds = () => {
@@ -138,18 +93,11 @@ class MainActivity : AppCompatActivity() {
         if (!obj) {
           return false;
         }
-        let overriden = false;
         for (const key in obj) {
           if (obj.hasOwnProperty(key) && key === propertyName) {
             obj[key] = overrideValue;
-            overriden = true;
-          } else if (obj.hasOwnProperty(key) && typeof obj[key] === "object") {
-            if (overrideObject(obj[key], propertyName, overrideValue)) {
-              overriden = true;
-            }
           }
         }
-        return overriden;
       };
       const jsonOverride = (propertyName, overrideValue) => {
         const nativeJSONParse = JSON.parse;
@@ -158,18 +106,6 @@ class MainActivity : AppCompatActivity() {
           overrideObject(obj, propertyName, overrideValue);
           return obj;
         };
-        const nativeResponseJson = Response.prototype.json;
-        Response.prototype.json = new Proxy(nativeResponseJson, {
-          apply(...args) {
-            const promise = Reflect.apply(args);
-            return new Promise((resolve, reject) => {
-              promise.then((data) => {
-                overrideObject(data, propertyName, overrideValue);
-                resolve(data);
-              }).catch((error) => reject(error));
-            });
-          }
-        });
       };
       jsonOverride("adPlacements", []);
       hideAds();
@@ -177,8 +113,30 @@ class MainActivity : AppCompatActivity() {
     const script = document.createElement("script");
     script.innerHTML = `(`+pageScript.toString()+`)();`;
     document.head.appendChild(script);
-    document.head.removeChild(script);
 })();
         """.trimIndent(), null)
+            }
+        }
     }
+    override fun onBackPressed() {
+        if (webView!!.canGoBack()) {
+            webView!!.goBack()
+        } else {
+            finish()
+        }
+    }
+    override fun onNewIntent(intent: Intent) {
+    }
+    private fun loadUrlFromIntent(intent: Intent): Boolean {
+        return if (Intent.ACTION_VIEW == intent.action) {
+            val url = intent.data.toString()
+            if (url != webView!!.url) {
+                webView!!.loadUrl(url)
+            }
+            true
+        } else {
+            false
+        }
+    }
+
 }
