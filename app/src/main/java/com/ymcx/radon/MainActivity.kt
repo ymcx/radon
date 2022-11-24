@@ -1,12 +1,13 @@
 package com.ymcx.radon
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebChromeClient
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
@@ -16,6 +17,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 
 class MainActivity : AppCompatActivity() {
     var webView: WebView? = null
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -59,11 +61,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
         webView!!.webViewClient = object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-                Intent(Intent.ACTION_VIEW, Uri.parse(url)).apply {
+            override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
+                Intent(Intent.ACTION_VIEW, request.url).apply {
                     startActivity(this)
                 }
-                return when (Uri.parse(url).host) {
+                return when (request.url.host) {
                     "m.youtube.com", "youtube.com", "www.youtube.com", "youtu.be", "accounts.google.com" -> false
                     else -> true
                 }
