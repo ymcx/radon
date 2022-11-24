@@ -63,13 +63,13 @@ class MainActivity : AppCompatActivity() {
         }
         webView!!.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
+                if (request.url.host == "m.youtube.com" || request.url.host == "youtube.com" || request.url.host == "www.youtube.com" || request.url.host == "youtu.be" || request.url.host == "accounts.google.com") {
+                    return false
+                }
                 Intent(Intent.ACTION_VIEW, request.url).apply {
                     startActivity(this)
                 }
-                return when (request.url.host) {
-                    "m.youtube.com", "youtube.com", "www.youtube.com", "youtu.be", "accounts.google.com" -> false
-                    else -> true
-                }
+                return true
             }
             override fun onPageFinished(view: WebView, url: String) {
                 webView!!.evaluateJavascript("""
