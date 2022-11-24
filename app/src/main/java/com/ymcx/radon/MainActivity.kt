@@ -7,7 +7,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebChromeClient
-import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
@@ -23,7 +22,6 @@ class MainActivity : AppCompatActivity() {
         webView = findViewById(R.id.webView)
         webView!!.visibility = View.INVISIBLE
         webView!!.settings.javaScriptEnabled = true
-        //webView!!.settings.cacheMode = WebSettings.LOAD_NO_CACHE
         webView!!.settings.domStorageEnabled = true
         if (!loadUrlFromIntent(intent)) {
             webView!!.loadUrl("https://m.youtube.com/feed/subscriptions")
@@ -126,6 +124,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
     override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
     }
     private fun loadUrlFromIntent(intent: Intent): Boolean {
         return if (Intent.ACTION_VIEW == intent.action) {
