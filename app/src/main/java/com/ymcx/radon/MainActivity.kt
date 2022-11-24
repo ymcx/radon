@@ -11,6 +11,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
+import android.window.OnBackInvokedDispatcher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -115,12 +116,14 @@ class MainActivity : AppCompatActivity() {
         """.trimIndent(), null)
             }
         }
-    }
-    override fun onBackPressed() {
-        if (webView!!.canGoBack()) {
-            webView!!.goBack()
-        } else {
-            finish()
+        onBackInvokedDispatcher.registerOnBackInvokedCallback(
+            OnBackInvokedDispatcher.PRIORITY_DEFAULT
+        ) {
+            if (webView!!.canGoBack()) {
+                webView!!.goBack()
+            } else {
+                finish()
+            }
         }
     }
     override fun onNewIntent(intent: Intent) {
