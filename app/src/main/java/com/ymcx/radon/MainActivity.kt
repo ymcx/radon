@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         }
         webView!!.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
-                if (request.url.host == "m.youtube.com" || request.url.host == "youtube.com" || request.url.host == "www.youtube.com" || request.url.host == "youtu.be" || request.url.host == "accounts.google.com") {
+                if (request.url.host == "m.youtube.com" || request.url.host == "youtube.com" || request.url.host == "www.youtube.com" || request.url.host == "youtu.be" || request.url.host.contains("accounts")) {
                     return false
                 }
                 Intent(Intent.ACTION_VIEW, request.url).apply {
