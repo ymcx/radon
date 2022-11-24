@@ -120,9 +120,7 @@ class MainActivity : AppCompatActivity() {
         """.trimIndent(), null)
             }
         }
-        onBackInvokedDispatcher.registerOnBackInvokedCallback(
-            OnBackInvokedDispatcher.PRIORITY_DEFAULT
-        ) {
+        onBackInvokedDispatcher.registerOnBackInvokedCallback(OnBackInvokedDispatcher.PRIORITY_DEFAULT) {
             if (webView!!.canGoBack()) {
                 if (requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE) {
                     webView!!.webChromeClient!!.onHideCustomView()
