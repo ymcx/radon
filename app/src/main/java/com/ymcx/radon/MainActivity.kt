@@ -42,10 +42,7 @@ class MainActivity : AppCompatActivity() {
                     show(WindowInsetsCompat.Type.systemBars())
                 }
             }
-            override fun onShowCustomView(
-                paramView: View,
-                paramCustomViewCallback: CustomViewCallback
-            ) {
+            override fun onShowCustomView(paramView: View, paramCustomViewCallback: CustomViewCallback) {
                 mCustomView = paramView
                 mCustomViewCallback = paramCustomViewCallback
                 (this@MainActivity.window.decorView as FrameLayout).addView(mCustomView)
