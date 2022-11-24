@@ -1,11 +1,9 @@
-name: Build
 on: [workflow_dispatch]
 jobs:
   build:
     runs-on: windows-latest
     steps:
-    - name: Build
-      run: |
+    - run: |
         git clone --depth=1 -q https://github.com/ymcx/radon
         cd radon
         invoke-webrequest -uri https://download.oracle.com/java/19/latest/jdk-19_windows-x64_bin.zip -outfile jdk.zip
