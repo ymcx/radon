@@ -1,7 +1,7 @@
 name: Build
 on: [workflow_dispatch]
 jobs:
-  build:
+  Build:
     runs-on: windows-latest
     steps:
     - name: Build
@@ -10,13 +10,8 @@ jobs:
         cd radon
         invoke-webrequest -uri https://download.oracle.com/java/19/latest/jdk-19_windows-x64_bin.zip -outfile java.zip
         tar xf java.zip
-        get-childitem | where {$_ -like 'jdk*'} | %{ren $_ jdk}
+        get-childitem | where {$_.name -like 'jdk*'} | %{ren $_ jdk}
         $env:JAVA_HOME = "$pwd\jdk"
-        
-        ls
-        echo $pwd
-        echo $env:JAVA_HOME
-        
         invoke-expression ((curl -s https://services.gradle.org/versions/nightly | select-string version) -replace '"version" : ','./gradlew wrapper --gradle-version=' -replace ',','')
         .\gradlew.bat -q assemblerelease
         invoke-webrequest -uri https://dl.google.com/android/repository/build-tools_r33-windows.zip -outfile tools.zip
