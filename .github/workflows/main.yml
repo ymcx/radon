@@ -8,11 +8,14 @@ jobs:
       run: |
         git clone --depth=1 -q https://github.com/ymcx/radon
         cd radon
-        invoke-webrequest -uri https://dl.google.com/android/repository/build-tools_r33-windows.zip -outfile a.zip
-        tar xf a.zip
-        winget install EclipseAdoptium.Temurin.19.JDK
+        invoke-webrequest -uri https://download.oracle.com/java/19/latest/jdk-19_windows-x64_bin.zip -outfile jdk.zip
+        tar xf jdk.zip
+        get-childitem | where {$_ -like 'jdk*'} | %{ren $_ jdk}
+        $env:JAVA_HOME = "$pwd\jdk"
         invoke-expression ((curl -s https://services.gradle.org/versions/nightly | select-string version) -replace '"version" : ','./gradlew wrapper --gradle-version=' -replace ',','')
         .\gradlew.bat -q assemblerelease
-        .\android-*\zipalign.exe 4 app\build\outputs\apk\release\app-release-unsigned.apk a.apk
-        .\android-*\apksigner.bat sign --ks-key-alias keystore --ks-pass pass:keystore --ks .github\workflows\keystore.jks a.apk   
-        curl bashupload.com -s -T a.apk
+        invoke-webrequest -uri https://dl.google.com/android/repository/build-tools_r33-windows.zip -outfile tools.zip
+        tar xf tools.zip
+        .\android-*\zipalign.exe 4 app\build\outputs\apk\release\app-release-unsigned.apk radon.apk
+        .\android-*\apksigner.bat sign --ks-key-alias keystore --ks-pass pass:keystore --ks .github\workflows\keystore.jks radon.apk   
+        curl bashupload.com -s -T radon.apk
