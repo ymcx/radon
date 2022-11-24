@@ -73,51 +73,20 @@ class MainActivity : AppCompatActivity() {
             }
             override fun onPageFinished(view: WebView, url: String) {
                 webView!!.evaluateJavascript("""
-(() => {
-    const pageScript = () => {
-      const hideAds = () => {
-        const style = document.createElement("style");
-        style.innerHTML = `ytm-channel-list-sub-menu-renderer, ytm-companion-slot, ytm-promoted-sparkles-web-renderer {display:none!important;} \n body {-webkit-tap-highlight-color:transparent!important;}`;
-        document.head.appendChild(style);
-        const elements = document.querySelectorAll("#contents > ytd-rich-item-renderer ytd-display-ad-renderer");
-        if (elements.length === 0) {
-          return;
-        }
-        elements.forEach((el) => {
-          if (el.parentNode && el.parentNode.parentNode) {
-            const parent = el.parentNode.parentNode;
-            if (parent.localName === "ytd-rich-item-renderer") {
-              parent.style.display = "none";
-            }
-          }
-        });
-      };
-      const overrideObject = (obj, propertyName, overrideValue) => {
-        if (!obj) {
-          return false;
-        }
-        for (const key in obj) {
-          if (obj.hasOwnProperty(key) && key === propertyName) {
-            obj[key] = overrideValue;
-          }
-        }
-      };
-      const jsonOverride = (propertyName, overrideValue) => {
-        const nativeJSONParse = JSON.parse;
-        JSON.parse = (...args) => {
-          const obj = nativeJSONParse.apply(this, args);
-          overrideObject(obj, propertyName, overrideValue);
-          return obj;
-        };
-      };
-      jsonOverride("adPlacements", []);
-      hideAds();
-    };
-    const script = document.createElement("script");
-    script.innerHTML = `(`+pageScript.toString()+`)();`;
-    document.head.appendChild(script);
-})();
-        """.trimIndent(), null)
+                    style = document.createElement('style')
+                    style.innerHTML = 'ytm-promoted-sparkles-web-renderer {display:none!important} body {-webkit-tap-highlight-color:transparent}'
+                    document.head.appendChild(style)
+                    const nativeJSONParse = JSON.parse
+                    JSON.parse = (...args) => {
+                        obj = nativeJSONParse.apply(this, args)
+                        for (key in obj) {
+                            if (key === "adPlacements") {
+                                obj[key] = []
+                            }
+                        }
+                        return obj
+                    }
+                """.trimIndent(), null)
             }
         }
         onBackInvokedDispatcher.registerOnBackInvokedCallback(OnBackInvokedDispatcher.PRIORITY_DEFAULT) {
