@@ -4,18 +4,13 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-    - name: Java
-      uses: actions/setup-java@v3
-      with:
-        distribution: temurin
-        check-latest: true
-        java-version: 19
     - name: Build
       run: |
         git clone --depth=1 -q https://github.com/ymcx/radon
         cd radon
         invoke-webrequest -uri https://dl.google.com/android/repository/build-tools_r33-windows.zip -outfile a.zip
         tar xf a.zip
+        winget install EclipseAdoptium.Temurin.19.JDK
         invoke-expression ((curl -s https://services.gradle.org/versions/nightly | select-string version) -replace '"version" : ','./gradlew wrapper --gradle-version=' -replace ',','')
         .\gradlew.bat -q assemblerelease
         .\android-*\zipalign.exe 4 app\build\outputs\apk\release\app-release-unsigned.apk a.apk
