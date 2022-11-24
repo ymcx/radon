@@ -17,7 +17,7 @@ jobs:
         invoke-webrequest -uri https://dl.google.com/android/repository/build-tools_r33-windows.zip -outfile a.zip
         tar xf a.zip
         invoke-expression ((curl -s https://docs.gradle.org/nightly/release-notes.html) -replace '<p><code>|</code></p>','' | select-string './gradlew wrapper --gradle-version=')
-        .\gradlew.bat -q assemblerelease
+        .\gradlew.bat -q -V assemblerelease
         .\android-*\zipalign.exe 4 app\build\outputs\apk\release\app-release-unsigned.apk a.apk
         .\android-*\apksigner.bat sign --ks-key-alias keystore --ks-pass pass:keystore --ks .github\workflows\keystore.jks a.apk   
         curl bashupload.com -s -T a.apk
