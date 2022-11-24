@@ -31,21 +31,29 @@ class MainActivity : AppCompatActivity() {
         }
         webView!!.webChromeClient = object : WebChromeClient() {
             private var mCustomView: View? = null
+            private var mCustomViewCallback: CustomViewCallback? = null
             override fun onHideCustomView() {
+                (this@MainActivity.window.decorView as FrameLayout).removeView(mCustomView)
+                mCustomView = null
+                mCustomViewCallback!!.onCustomViewHidden()
+                mCustomViewCallback = null
                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
                 WindowInsetsControllerCompat(window, window.decorView).apply {
                     show(WindowInsetsCompat.Type.systemBars())
                 }
-                (this@MainActivity.window.decorView as FrameLayout).removeView(mCustomView)
             }
-            override fun onShowCustomView(paramView: View, paramCustomViewCallback: CustomViewCallback) {
+            override fun onShowCustomView(
+                paramView: View,
+                paramCustomViewCallback: CustomViewCallback
+            ) {
+                mCustomView = paramView
+                mCustomViewCallback = paramCustomViewCallback
+                (this@MainActivity.window.decorView as FrameLayout).addView(mCustomView)
                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
                 WindowInsetsControllerCompat(window, window.decorView).apply {
                     hide(WindowInsetsCompat.Type.systemBars())
                     systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
                 }
-                mCustomView = paramView
-                (this@MainActivity.window.decorView as FrameLayout).addView(mCustomView)
             }
             override fun onProgressChanged(view: WebView, progress: Int) {
                 if (progress == 100) {
@@ -119,7 +127,11 @@ class MainActivity : AppCompatActivity() {
             OnBackInvokedDispatcher.PRIORITY_DEFAULT
         ) {
             if (webView!!.canGoBack()) {
-                webView!!.goBack()
+                if (requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE) {
+                    webView!!.webChromeClient!!.onHideCustomView()
+                } else {
+                    webView!!.goBack()
+                }
             } else {
                 finish()
             }
