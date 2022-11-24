@@ -21,7 +21,7 @@ android {
         targetCompatibility(JavaVersion.VERSION_19)
     }
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_19.toString()
+        jvmTarget = JavaVersion.VERSION_19
     }
 }
 dependencies {
