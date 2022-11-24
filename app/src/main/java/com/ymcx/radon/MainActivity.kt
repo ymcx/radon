@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
                     webView!!.visibility = View.VISIBLE
                 }
             }
-            override fun getDefaultVideoPoster(): Bitmap? {
+            override fun getDefaultVideoPoster(): Bitmap {
                 return Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
             }
         }
