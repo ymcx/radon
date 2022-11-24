@@ -26,7 +26,9 @@ class MainActivity : AppCompatActivity() {
         webView!!.visibility = View.INVISIBLE
         webView!!.settings.javaScriptEnabled = true
         webView!!.settings.domStorageEnabled = true
-        loadUrlFromIntent(intent)
+        if (loadUrlFromIntent(intent)) {
+            webView!!.loadUrl("https://m.youtube.com/feed/subscriptions")
+        }
         webView!!.webChromeClient = object : WebChromeClient() {
             private var mCustomView: View? = null
             override fun onHideCustomView() {
@@ -127,11 +129,12 @@ class MainActivity : AppCompatActivity() {
         super.onNewIntent(intent)
         loadUrlFromIntent(intent)
     }
-    private fun loadUrlFromIntent(intent: Intent) {
-        if (Intent.ACTION_VIEW == intent.action) {
+    private fun loadUrlFromIntent(intent: Intent): Boolean {
+        return if (Intent.ACTION_VIEW == intent.action) {
             webView!!.loadUrl(intent.data.toString())
+            false
         } else {
-            webView!!.loadUrl("https://m.youtube.com/feed/subscriptions")
+            true
         }
     }
 }
