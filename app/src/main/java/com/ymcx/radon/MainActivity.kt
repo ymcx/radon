@@ -71,18 +71,14 @@ class MainActivity : AppCompatActivity() {
             }
             override fun onPageFinished(view: WebView, url: String) {
                 webView!!.evaluateJavascript("""
-                    style = document.createElement('style')
-                    style.innerHTML = 'ytm-promoted-sparkles-web-renderer {display:none!important} body {-webkit-tap-highlight-color:transparent}'
-                    document.head.appendChild(style)
-                    const nativeJSONParse = JSON.parse
-                    JSON.parse = (...args) => {
-                        obj = nativeJSONParse.apply(this, args)
-                        for (key in obj) {
-                            if (key === "adPlacements") {
-                                obj[key] = []
-                            }
-                        }
-                        return obj
+                    a = document.createElement('style')
+                    a.innerHTML = 'ytm-promoted-sparkles-web-renderer {display:none!important} body {-webkit-tap-highlight-color:transparent}'
+                    document.head.appendChild(a)
+                    const b = JSON.parse
+                    JSON.parse = (...c) => {
+                        d = b.apply(this, c)
+                        d["adPlacements"] = []
+                        return d
                     }
                 """.trimIndent(), null)
             }
