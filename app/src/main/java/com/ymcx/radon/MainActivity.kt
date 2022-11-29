@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
             override fun onPageFinished(view: WebView, url: String) {
                 webView!!.evaluateJavascript("""
                     a = document.createElement('style')
-                    a.innerHTML = 'ytm-channel-list-sub-menu-renderer, ytm-pivot-bar-item-renderer:nth-of-type(1), ytm-pivot-bar-item-renderer:nth-of-type(2), ytm-promoted-sparkles-web-renderer {display:none!important} body {-webkit-tap-highlight-color:transparent}'
+                    a.innerHTML = '.center.player-controls-middle > button.icon-button:nth-of-type(1), .center.player-controls-middle > button.icon-button:nth-of-type(5), ytm-info-panel-container-renderer.item, .playlist-immersive-header-container, ytm-playlist-controls, .ytm-autonav-toggle-button-container, .rich-grid-sticky-header, #related-chips-sentinel, .cbox.ytm-autonav-bar, ytm-channel-list-sub-menu-renderer, ytm-pivot-bar-item-renderer:nth-of-type(1), ytm-pivot-bar-item-renderer:nth-of-type(2), ytm-promoted-sparkles-web-renderer {display:none!important} body {-webkit-tap-highlight-color:transparent}'
                     document.head.appendChild(a)
                     const b = JSON.parse
                     JSON.parse = (...c) => {
