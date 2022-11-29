@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
             override fun onShowCustomView(paramView: View, paramCustomViewCallback: CustomViewCallback) {
                 mCustomView = paramView
                 mCustomViewCallback = paramCustomViewCallback
-                (this@MainActivity.window.decorView as FrameLayout).addView(mCustomView, FrameLayout.LayoutParams(-1, -1))
+                (this@MainActivity.window.decorView as FrameLayout).addView(mCustomView, FrameLayout.LayoutParams(2282, 1080))
                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
                 WindowInsetsControllerCompat(window, window.decorView).apply {
                     hide(WindowInsetsCompat.Type.systemBars())
