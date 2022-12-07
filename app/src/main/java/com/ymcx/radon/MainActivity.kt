@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.graphics.Bitmap
-import android.graphics.Color.parseColor
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebChromeClient
@@ -57,9 +56,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             override fun getDefaultVideoPoster(): Bitmap {
-                val a = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
-                a.eraseColor(parseColor("#0F0F0F"))
-                return a
+                return Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
             }
         }
         webView!!.webViewClient = object : WebViewClient() {
