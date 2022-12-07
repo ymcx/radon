@@ -86,7 +86,6 @@ class MainActivity : AppCompatActivity() {
                         .rich-grid-sticky-header,\
                         .cbox.ytm-autonav-bar,\
                         ytm-channel-list-sub-menu-renderer,\
-                        ytm-pivot-bar-renderer,\
                         ytm-promoted-sparkles-web-renderer {display:none!important}\
                         body {-webkit-tap-highlight-color:transparent}\
                     '
@@ -96,13 +95,6 @@ class MainActivity : AppCompatActivity() {
                         d = b.apply(this, c)
                         d["adPlacements"] = []
                         return d
-                    }
-                    document.getElementById('home-icon').onclick = function() {
-                        if (window.location != 'https://m.youtube.com/feed/subscriptions') {
-                            window.location = 'https://m.youtube.com/feed/subscriptions'
-                        } else {
-                            window.location = 'https://m.youtube.com/playlist?list=WL'
-                        }
                     }
                 """.trimIndent(), null)
             }
