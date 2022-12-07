@@ -71,6 +71,13 @@ class MainActivity : AppCompatActivity() {
             }
             override fun onPageFinished(view: WebView, url: String) {
                 webView!!.evaluateJavascript("""
+                    document.getElementById('home-icon').onclick = function() {
+                        if (window.location != 'https://m.youtube.com/feed/subscriptions') {
+                            window.location = 'https://m.youtube.com/feed/subscriptions'
+                        } else {
+                            window.location = 'https://m.youtube.com/playlist?list=WL'
+                        }
+                    }
                     a = document.createElement('style')
                     a.innerHTML = '\
                         .top-standalone-badge-modern,\
