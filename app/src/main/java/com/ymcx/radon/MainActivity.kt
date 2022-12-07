@@ -71,15 +71,10 @@ class MainActivity : AppCompatActivity() {
             }
             override fun onPageFinished(view: WebView, url: String) {
                 webView!!.evaluateJavascript("""
-                    document.getElementById('home-icon').onclick = function() {
-                        if (window.location != 'https://m.youtube.com/feed/subscriptions') {
-                            window.location = 'https://m.youtube.com/feed/subscriptions'
-                        } else {
-                            window.location = 'https://m.youtube.com/playlist?list=WL'
-                        }
-                    }
                     a = document.createElement('style')
                     a.innerHTML = '\
+                        .player-controls-background-action-items,\
+                        .chips-visible,\
                         .top-standalone-badge-modern,\
                         ytm-video-with-context-renderer:has([data-style=SHORTS]),\
                         .center.player-controls-middle > button.icon-button:nth-of-type(1),\
@@ -101,6 +96,13 @@ class MainActivity : AppCompatActivity() {
                         d = b.apply(this, c)
                         d["adPlacements"] = []
                         return d
+                    }
+                    document.getElementById('home-icon').onclick = function() {
+                        if (window.location != 'https://m.youtube.com/feed/subscriptions') {
+                            window.location = 'https://m.youtube.com/feed/subscriptions'
+                        } else {
+                            window.location = 'https://m.youtube.com/playlist?list=WL'
+                        }
                     }
                 """.trimIndent(), null)
             }
