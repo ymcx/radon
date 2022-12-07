@@ -73,7 +73,6 @@ class MainActivity : AppCompatActivity() {
                 webView!!.evaluateJavascript("""
                     a = document.createElement('style')
                     a.innerHTML = '\
-                        .player-controls-background-action-items,\
                         ytm-video-with-context-renderer:has([data-style=SHORTS]),\
                         .center.player-controls-middle > button.icon-button:nth-of-type(1),\
                         .center.player-controls-middle > button.icon-button:nth-of-type(5),\
@@ -81,7 +80,6 @@ class MainActivity : AppCompatActivity() {
                         .playlist-immersive-header-container,\
                         ytm-playlist-controls,\
                         .player-controls-top,\
-                        .chips-visible,\
                         .rich-grid-sticky-header,\
                         .cbox.ytm-autonav-bar,\
                         ytm-channel-list-sub-menu-renderer,\
