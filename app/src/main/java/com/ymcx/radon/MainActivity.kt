@@ -73,6 +73,7 @@ class MainActivity : AppCompatActivity() {
                 webView!!.evaluateJavascript("""
                     a = document.createElement('style')
                     a.innerHTML = '\
+                        .top-standalone-badge-modern,\
                         ytm-video-with-context-renderer:has([data-style=SHORTS]),\
                         .center.player-controls-middle > button.icon-button:nth-of-type(1),\
                         .center.player-controls-middle > button.icon-button:nth-of-type(5),\
