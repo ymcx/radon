@@ -61,7 +61,8 @@ class MainActivity : AppCompatActivity() {
         }
         webView!!.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
-                if (request.url.host!!.contains("youtu", "accounts")) {
+                val a = request.url.host!!
+                if (a.contains("youtu") || a.contains("accounts")) {
                     return false
                 }
                 Intent(Intent.ACTION_VIEW, request.url).apply {
