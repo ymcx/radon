@@ -75,17 +75,18 @@ class MainActivity : AppCompatActivity() {
                 webView!!.evaluateJavascript("""
                     a = document.createElement('style')
                     a.innerHTML = '\
-                        .player-controls-background-action-items,\
-                        .chips-visible,\
-                        .top-standalone-badge-modern,\
-                        ytm-video-with-context-renderer:has([data-style=SHORTS]),\
                         .center.player-controls-middle > button.icon-button:nth-of-type(1),\
                         .center.player-controls-middle > button.icon-button:nth-of-type(5),\
-                        ytm-info-panel-container-renderer,\
-                        .rich-grid-sticky-header,\
-                        .cbox.ytm-autonav-bar,\
+                        ytm-video-with-context-renderer:has([data-style=SHORTS]),\
+                        ytm-pivot-bar-item-renderer:nth-of-type(1),\
+                        ytm-pivot-bar-item-renderer:nth-of-type(2),\
+                        .player-controls-background-action-items,\
+                        ytm-promoted-sparkles-web-renderer,\
                         ytm-channel-list-sub-menu-renderer,\
-                        ytm-promoted-sparkles-web-renderer {display:none!important}\
+                        ytm-info-panel-container-renderer,\
+                        .top-standalone-badge-modern,\
+                        .rich-grid-sticky-header,\
+                        .chips-visible {display:none!important}\
                         body {-webkit-tap-highlight-color:transparent}\
                     '
                     document.head.appendChild(a)
