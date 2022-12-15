@@ -6,7 +6,7 @@
         android:theme="@style/AppTheme"
         android:label="Radon">
         <activity
-            android:configChanges="uiMode|orientation|screenSize"
+            android:configChanges="orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:launchMode="singleInstance"
             android:name="MainActivity"
             android:exported="true">
