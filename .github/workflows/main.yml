@@ -23,4 +23,4 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: a.apk
-        tag_name: main
+        tag_name: radon
