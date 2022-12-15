@@ -84,7 +84,6 @@ class MainActivity : AppCompatActivity() {
                         ytm-promoted-sparkles-web-renderer,\
                         ytm-channel-list-sub-menu-renderer,\
                         ytm-info-panel-container-renderer,\
-                        .top-standalone-badge-modern,\
                         .rich-grid-sticky-header,\
                         .chips-visible {display:none!important}\
                         body {-webkit-tap-highlight-color:transparent}\
