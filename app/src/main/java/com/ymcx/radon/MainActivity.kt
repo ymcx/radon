@@ -81,8 +81,6 @@ class MainActivity : AppCompatActivity() {
                         .center.player-controls-middle > button.icon-button:nth-of-type(1),\
                         .center.player-controls-middle > button.icon-button:nth-of-type(5),\
                         ytm-info-panel-container-renderer,\
-                        .playlist-immersive-header-container,\
-                        ytm-playlist-controls,\
                         .rich-grid-sticky-header,\
                         .cbox.ytm-autonav-bar,\
                         ytm-channel-list-sub-menu-renderer,\
