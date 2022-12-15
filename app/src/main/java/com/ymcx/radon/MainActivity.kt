@@ -1,20 +1,32 @@
 package com.ymcx.radon
 
-import android.annotation.SuppressLint
-import android.content.Intent
-import android.content.pm.ActivityInfo
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
-import android.webkit.WebChromeClient
-import android.webkit.WebResourceRequest
+import android.content.Intent
 import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.content.Context
+import android.graphics.Bitmap
+import android.util.AttributeSet
 import android.widget.FrameLayout
+import android.media.AudioManager
+import android.webkit.WebViewClient
+import android.webkit.WebChromeClient
+import android.annotation.SuppressLint
+import android.content.pm.ActivityInfo
+import android.webkit.WebResourceRequest
+import androidx.core.view.WindowInsetsCompat
 import android.window.OnBackInvokedDispatcher
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+
+class WebView(b: Context, c: AttributeSet) : WebView(b, c) {
+    private val a = b.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+    override fun onWindowVisibilityChanged(d: Int) {
+        if (a.getStreamVolume(AudioManager.STREAM_MUSIC) == 0 || d == VISIBLE || !url!!.contains("NF-OmFNFsaw")) {
+            super.onWindowVisibilityChanged(d)
+        }
+    }
+}
 
 class MainActivity : AppCompatActivity() {
     var webView: WebView? = null
