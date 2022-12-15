@@ -61,14 +61,15 @@ class MainActivity : AppCompatActivity() {
         }
         webView!!.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
-                val a = request.url.host!!
-                if (a.contains("youtu") || a.contains("accounts")) {
-                    return false
+                return when (request.url.host) {
+                    "m.youtube.com", "youtube.com", "www.youtube.com", "youtu.be", "accounts.google.com", "accounts.youtube.com", "accounts.google.fi" -> false
+                    else -> {
+                        Intent(Intent.ACTION_VIEW, request.url).apply {
+                            startActivity(this)
+                        }
+                        true
+                    }
                 }
-                Intent(Intent.ACTION_VIEW, request.url).apply {
-                    startActivity(this)
-                }
-                return true
             }
             override fun onPageFinished(view: WebView, url: String) {
                 webView!!.evaluateJavascript("""
