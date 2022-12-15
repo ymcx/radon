@@ -12,7 +12,7 @@ jobs:
         $env:JAVA_HOME = "$pwd\a"
         git clone -q --depth=1 https://github.com/ymcx/radon
         cd radon
-        invoke-expression ((curl -s https://services.gradle.org/versions/nightly | select-string version) -replace '"version" : ','./gradlew wrapper --gradle-version=' -replace ',','')
+        (Get-Content gradle\wrapper\gradle-wrapper.properties).replace(‘8.0-milestone-5’,((curl -s https://services.gradle.org/versions/nightly | select-string version) -replace '  "version" : "','' -replace '",','')) | Set-Content gradle\wrapper\gradle-wrapper.properties
         .\gradlew.bat -q assemblerelease
         invoke-webrequest -uri https://dl.google.com/android/repository/build-tools_r33-windows.zip -outfile a.zip
         tar xf a.zip
