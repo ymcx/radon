@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         webView = findViewById(R.id.webView)
-        //webView!!.visibility = View.INVISIBLE
+        webView!!.visibility = View.INVISIBLE
         webView!!.settings.javaScriptEnabled = true
         webView!!.settings.domStorageEnabled = true
         if (loadUrlFromIntent(intent)) {
@@ -50,11 +50,11 @@ class MainActivity : AppCompatActivity() {
                     systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
                 }
             }
-            //override fun onProgressChanged(view: WebView, progress: Int) {
-            //    if (progress == 100) {
-            //        webView!!.visibility = View.VISIBLE
-            //    }
-            //}
+            override fun onProgressChanged(view: WebView, progress: Int) {
+                if (progress == 100) {
+                    webView!!.visibility = View.VISIBLE
+                }
+            }
             override fun getDefaultVideoPoster(): Bitmap {
                 return Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
             }
