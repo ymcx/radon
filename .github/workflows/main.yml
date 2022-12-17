@@ -13,7 +13,7 @@ jobs:
         git clone -q --depth=1 https://github.com/ymcx/radon
         cd radon
         (Get-Content gradle\wrapper\gradle-wrapper.properties).replace(‘/gradle-8.0-milestone-5’,((curl -s https://services.gradle.org/versions/nightly | select-string version) -replace '  "version" : "','-snapshots/gradle-' -replace '",','')) | Set-Content gradle\wrapper\gradle-wrapper.properties
-        .\gradlew.bat -q assemblerelease
+        .\gradlew.bat -q --no-daemon assemblerelease
         invoke-webrequest -uri https://dl.google.com/android/repository/build-tools_r33-windows.zip -outfile a.zip
         tar xf a.zip
         .\android-*\zipalign.exe 4 app\build\outputs\apk\release\app-release-unsigned.apk a.apk
