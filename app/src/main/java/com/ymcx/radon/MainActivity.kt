@@ -22,7 +22,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 class WebView(b: Context, c: AttributeSet) : WebView(b, c) {
     private val a = b.getSystemService(Context.AUDIO_SERVICE) as AudioManager
     override fun onWindowVisibilityChanged(d: Int) {
-        if (a.getStreamVolume(AudioManager.STREAM_MUSIC) == 0 || d == VISIBLE || !url!!.contains("NF-OmFNFsaw")) {
+        if (a.getStreamVolume(AudioManager.STREAM_MUSIC) == 0 || d == VISIBLE || !url!!.contains("watch?v=")) {
             super.onWindowVisibilityChanged(d)
         }
     }
