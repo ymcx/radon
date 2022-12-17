@@ -91,6 +91,7 @@ class MainActivity : AppCompatActivity() {
                         ytm-video-with-context-renderer:has([data-style=SHORTS]),\
                         ytm-pivot-bar-item-renderer:nth-of-type(1),\
                         ytm-pivot-bar-item-renderer:nth-of-type(2),\
+                        ytm-promoted-sparkles-web-renderer,\
                         ytm-channel-list-sub-menu-renderer {display:none!important}\
                         body {-webkit-tap-highlight-color:transparent}'
                     document.head.appendChild(a)
