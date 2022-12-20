@@ -19,13 +19,23 @@ import android.window.OnBackInvokedDispatcher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowInsetsControllerCompat
 
-class WebView(b: Context, c: AttributeSet) : WebView(b, c) {
-    private val a = b.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-    override fun onWindowVisibilityChanged(d: Int) {
-        if (a.getStreamVolume(AudioManager.STREAM_MUSIC) == 0 || d == VISIBLE || !url!!.contains("watch?v=")) {
-            super.onWindowVisibilityChanged(d)
-        }
+class WebView : WebView {
+    constructor(context: Context) : super(context) {}
+    constructor(context: Context?, attrs: AttributeSet?) : super(
+        context!!, attrs) {
     }
+
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context!!, attrs, defStyleAttr) {
+    }
+
+    override fun onWindowVisibilityChanged(visibility: Int) {
+        
+
+       if (visibility != GONE && visibility != INVISIBLE || !this.url.toString().contains("youtube.com/watch?v=")) super.onWindowVisibilityChanged(
+            visibility)
+    }
+
 }
 
 class MainActivity : AppCompatActivity() {
