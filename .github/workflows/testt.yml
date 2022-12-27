@@ -10,6 +10,6 @@ jobs:
         touch aa.txt
     - name: Upload
       uses: svenstaro/upload-release-action@2.3.0
-      with: |
+      with:
         file: aa.txt
         overwrite: true
