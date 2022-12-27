@@ -1,10 +1,10 @@
-name: Build
+name: Radon
 on: [workflow_dispatch]
 jobs:
-  Build:
+  Radon:
     runs-on: windows-latest
     steps:
-    - name: Build
+    - name: Radon
       run: |
         invoke-webrequest -uri https://download.oracle.com/java/19/latest/jdk-19_windows-x64_bin.zip -outfile a.zip
         tar xf a.zip
