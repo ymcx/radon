@@ -16,4 +16,3 @@ jobs:
         tag: ${{ github.ref }}
         file: a.txt
         overwrite: true
-        body: "This is my release text"
