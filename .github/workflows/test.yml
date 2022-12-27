@@ -6,13 +6,12 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v3
     - name: test
       run: |
         touch a.txt
     - name: Upload
-      uses: svenstaro/upload-release-action@v2
-      with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        tag: ${{ github.ref }}
-        file: a.txt
-        overwrite: true
+      uses: svenstaro/upload-release-action@2.3.0
+        with:
+          file: a.txt
+          overwrite: true
