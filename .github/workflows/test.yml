@@ -14,5 +14,4 @@ jobs:
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         tag: ${{ github.ref }}
-        with: |
-          file: a.txt
+        file: a.txt
