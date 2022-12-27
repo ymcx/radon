@@ -15,4 +15,5 @@ jobs:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         tag: ${{ github.ref }}
         file: a.txt
+        overwrite: true
         body: "This is my release text"
