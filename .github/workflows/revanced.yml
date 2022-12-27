@@ -18,7 +18,7 @@ jobs:
           curl -s https://api.github.com/repos/revanced/revanced-cli/releases/latest | grep browser_download_url.*jar | cut -d : -f 2,3 | tr -d \" | wget -qi -
           java -jar revanced-cli*.jar -a com.google.android.youtube.apk -o revanced.apk -b revanced-patches*.jar --exclusive --experimental -m app-release-unsigned.apk -i video-ads -i microg-support -i general-ads -i minimized-playback
       - name: Upload
-        uses: svenstaro/upload-release-action@2
+        uses: svenstaro/upload-release-action@v2
         with:
           file: revanced.apk
           overwrite: true
