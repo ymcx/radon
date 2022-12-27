@@ -15,6 +15,7 @@ jobs:
       - name: Build APK
         run: |
           wget https://raw.githubusercontent.com/thewebtube/webtubeapp/f3ce2b00d9dcafa9928bb01563d6b0ceaaed6ba0/gradlew
+          chmod +x gradlew
           ./gradlew assembleRelease --no-daemon
       - name: Upload files to a GitHub release
         uses: svenstaro/upload-release-action@2.3.0
