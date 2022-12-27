@@ -7,18 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: 19
       - name: Build APK
         run: |
-          wget https://raw.githubusercontent.com/thewebtube/webtubeapp/f3ce2b00d9dcafa9928bb01563d6b0ceaaed6ba0/gradlew
-          chmod +x gradlew
-          ./gradlew assembleRelease --no-daemon
+          touch a.txt
       - name: Upload files to a GitHub release
         uses: svenstaro/upload-release-action@2.3.0
         with:
-          file: app/build/outputs/apk/release/app-release-unsigned.apk
+          file: a.txt
           overwrite: true
