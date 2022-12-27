@@ -1,15 +1,15 @@
-name: test
+name: testt
 on: [workflow_dispatch]
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: test
+    - name: testt
       run: |
-        touch a.txt
+        touch aa.txt
     - name: Upload
       uses: svenstaro/upload-release-action@2.3.0
-        with:
-          file: a.txt
-          overwrite: true
+      with: |
+        file: aa.txt
+        overwrite: true
