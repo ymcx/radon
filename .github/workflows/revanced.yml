@@ -9,9 +9,9 @@ jobs:
     steps:
     - name: ReVanced
       run: |
-        sudo apt install -yqq openjdk-19-jdk
+        sudo apt install -yqq openjdk-19-jdk cargo
         cargo install -q --git https://github.com/EFForg/apkeep.git
-        apkeep -d apk-pure -a com.google.android.youtube .
+        ~/.cargo/bin/apkeep -d apk-pure -a com.google.android.youtube .
         wget -q https://github.com/revanced/revanced-integrations/releases/latest/download/app-release-unsigned.apk
         curl -s https://api.github.com/repos/revanced/revanced-patches/releases/latest | grep browser_download_url.*jar | cut -d : -f 2,3 | tr -d \" | wget -qi -
         curl -s https://api.github.com/repos/revanced/revanced-cli/releases/latest | grep browser_download_url.*jar | cut -d : -f 2,3 | tr -d \" | wget -qi -
