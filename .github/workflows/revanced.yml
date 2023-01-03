@@ -5,11 +5,11 @@ on:
   - cron: '0 18 1 * *'
 jobs:
   ReVanced:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
     - name: ReVanced
       run: |
-        sudo apt install -yqq openjdk-17-jdk
+        sudo apt install -yqq openjdk-19-jdk
         wget -q https://github.com/efforg/apkeep/releases/latest/download/apkeep-x86_64-unknown-linux-gnu
         chmod +x apkeep-x86_64-unknown-linux-gnu 
         ./apkeep-x86_64-unknown-linux-gnu -d apk-pure -a com.google.android.youtube .
