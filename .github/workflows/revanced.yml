@@ -9,7 +9,7 @@ jobs:
     steps:
     - name: ReVanced
       run: |
-        sudo apt install -yqq openjdk-19-jre
+        sudo apt install -yqq openjdk-19-jdk
         wget -q https://github.com/efforg/apkeep/releases/latest/download/apkeep-x86_64-unknown-linux-gnu
         chmod +x apkeep-x86_64-unknown-linux-gnu 
         ./apkeep-x86_64-unknown-linux-gnu -d apk-pure -a com.google.android.youtube .
