@@ -16,7 +16,7 @@ jobs:
         curl -s https://api.github.com/repos/revanced/revanced-integrations/releases/latest | grep browser_download_url.*apk | cut -d : -f 2,3 | tr -d \" | wget -qi -
         curl -s https://api.github.com/repos/revanced/revanced-patches/releases/latest | grep browser_download_url.*jar | cut -d : -f 2,3 | tr -d \" | wget -qi -
         curl -s https://api.github.com/repos/revanced/revanced-cli/releases/latest | grep browser_download_url.*jar | cut -d : -f 2,3 | tr -d \" | wget -qi -
-        java -jar revanced-cli*.jar -a com.google.android.youtube.apk -o revanced.apk -b revanced-patches*.jar --exclusive --experimental -m revanced-integrations*.apk -i video-ads -i disable-fullscreen-panels -i hide-create-button -i hide-shorts-button -i microg-support -i general-ads -i minimized-playback
+        java -jar *cli*.jar -a *youtube*.apk -o revanced.apk -b *patches*.jar --exclusive --experimental -m *integrations*.apk -i video-ads -i disable-fullscreen-panels -i hide-create-button -i microg-support -i general-ads -i minimized-playback
     - name: Upload
       uses: svenstaro/upload-release-action@v2
       with:
