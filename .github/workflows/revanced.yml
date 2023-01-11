@@ -1,6 +1,5 @@
 name: ReVanced
-on:
-  workflow_dispatch
+on: workflow_dispatch
 jobs:
   ReVanced:
     runs-on: ubuntu-latest
